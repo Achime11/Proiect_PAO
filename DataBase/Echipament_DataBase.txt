@@ -1,0 +1,10 @@
+MedShop,0747348274,Pulsometru,2021,500.0
+Riester,0778741426,Stetoscop,2021,250.0
+MedShop,0747348274,Otoscop,2021,300.0
+HelpNet,0747348274,Laringoscop,2021,1500.0
+iHealth,0785962890,Tensiometru,2021,300.0
+MedShop,0747348274,Oxymetru,2021,750.0
+iHealth,07443248274,Oftalmoscop,2021,670.0
+MedShop,0747348274,Lampa examinare,2020,160.0
+0HelpNet,0747348274,Kit Prim-Ajutor,2021,1670.0
+iHealth,0785962890,Cantar,2019,550.0

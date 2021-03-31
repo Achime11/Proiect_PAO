@@ -9,7 +9,7 @@ public class Medic extends Persoana {
     int Ani_Experienta;
     Calendar Data_Angajarii;
 
-    public Medic(String specializare) {
+    public Medic() {
     }
 
     public Medic(String CNP, String nume, String prenume, String adresa, String telefon, String specializare, int ani_Experienta, Calendar data_Angajarii) {

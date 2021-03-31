@@ -7,6 +7,7 @@ import PackageProgramare.Programare;
 import PackageReteta.Reteta;
 import PackageServicii.Servicii;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class Main {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         //Initializarea datelor
         HashMap<String, Client> Clienti = new HashMap<>();
@@ -42,12 +43,12 @@ public class Main {
         ArrayList<Programare> Programari = new ArrayList<>();
         ArrayList<Reteta> Retete = new ArrayList<>();
         ArrayList<Echipament> Echipamente = new ArrayList<>();
-
+        Servicii.citire_DataBase(Clienti,Medici,Programari,Retete,Echipamente);
         //main
         Scanner scan = new Scanner(System.in);
         int opt;
-        initiziarizareMeniu();
         do {
+            initiziarizareMeniu();
             System.out.println();
             System.out.println();
             System.out.println("Optiunea aleasa: ");
@@ -65,10 +66,11 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("Modificare Client(Introduceti datele clientului)");
+
                     System.out.println("Nume: ");
-                    String Nume = scan.nextLine();
+                    String Nume = scan.next();
                     System.out.println("Prenume: ");
-                    String Prenume = scan.nextLine();
+                    String Prenume = scan.next();
                     for (Map.Entry x : Clienti.entrySet())
                         if(Nume.equals(((Client)x.getValue()).getNume()) && Prenume.equals(((Client)x.getValue()).getPrenume()))
                         {
@@ -79,9 +81,9 @@ public class Main {
                 case 4:
                     System.out.println("Stergere Client(Introduceti datele clientului)");
                     System.out.println("Nume: ");
-                    String Nume_stergere = scan.nextLine();
+                    String Nume_stergere = scan.next();
                     System.out.println("Prenume: ");
-                    String Prenume_stergere = scan.nextLine();
+                    String Prenume_stergere = scan.next();
                     for (Map.Entry x : Clienti.entrySet())
                         if(Nume_stergere.equals(((Client)x.getValue()).getNume()) && Prenume_stergere.equals(((Client)x.getValue()).getPrenume()))
                         {
@@ -107,9 +109,9 @@ public class Main {
                         System.out.println(((Medic)x.getValue()).toString());
                     System.out.println("Adaugare programare");
                     System.out.println("CNP Client: ");
-                    String cnp_client=scan.nextLine();
+                    String cnp_client=scan.next();
                     System.out.println("CNP Medic: ");
-                    String cnp_medic=scan.nextLine();
+                    String cnp_medic=scan.next();
                     Programare aux = Servicii.adaugare_Programare(cnp_client,cnp_medic);
                     Programari.add(aux);
                     break;
@@ -123,6 +125,7 @@ public class Main {
                     Servicii.afisare_Valoarea_media_echipamente(Echipamente);
                     break;
                 case 0:
+                    Servicii.scriere_DataBase(Clienti,Medici,Programari,Retete,Echipamente);
                     System.exit(0);
                     break;
                 default:

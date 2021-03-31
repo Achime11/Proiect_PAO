@@ -3,8 +3,14 @@ package PackageServicii;
 import PackageClient.Client;
 import PackageEchipament.Echipament;
 import PackageMedic.Medic;
+import PackageMedicament.Medicament;
 import PackageProgramare.Programare;
+import PackageReteta.Reteta;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class Servicii {
@@ -21,6 +27,210 @@ public class Servicii {
     ("10. Afisare valoare medie a echipamentelor.");
     ("0. Iesire.");
      */
+
+    //Citirea din fisiere
+    public static  void citire_DataBase(HashMap<String, Client> Clienti,HashMap<String, Medic> Medici,ArrayList<Programare> Programari,ArrayList<Reteta> Retete,ArrayList<Echipament> Echipamente){
+
+        try {
+            File fisier_client = new File("DataBase/Client_DataBase.txt");
+            Scanner myReader = new Scanner(fisier_client);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] arg_of_Data=data.split(",");
+                Client client = new Client();
+                client.setCNP(arg_of_Data[0]);
+                client.setNume(arg_of_Data[1]);
+                client.setPrenume(arg_of_Data[2]);
+                client.setAdresa(arg_of_Data[3]);
+                client.setTelefon(arg_of_Data[4]);
+                client.setAsigurat(Boolean.parseBoolean(arg_of_Data[5]));
+                client.setRezultat_Test_COVID(Boolean.parseBoolean(arg_of_Data[6]));
+                client.setSalariat(Boolean.parseBoolean(arg_of_Data[7]));
+                client.setBoli(arg_of_Data[8]);
+                client.setAlergeni(arg_of_Data[9]);
+                client.setGrupa_Sange(arg_of_Data[10]);
+                Clienti.put(arg_of_Data[0],client);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Fisierul Client_DataBase.txt nu a fost gasit!!!");
+            e.printStackTrace();
+        }
+
+        try {
+            File fisier_echipament = new File("DataBase/Echipament_DataBase.txt");
+            Scanner myReader = new Scanner(fisier_echipament);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] arg_of_Data=data.split(",");
+                Echipament echipament = new Echipament();
+                echipament.setNume_Producator(arg_of_Data[0]);
+                echipament.setTelefon(arg_of_Data[1]);
+                echipament.setNume_Echipament(arg_of_Data[2]);
+                echipament.setAn_Productie(Integer.parseInt(arg_of_Data[3]));
+                echipament.setPret(Float.parseFloat(arg_of_Data[4]));
+                Echipamente.add(echipament);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Fisierul Echipament_DataBase.txt nu a fost gasit!!!");
+            e.printStackTrace();
+        }
+
+        try {
+            File fisier_medic = new File("DataBase/Medic_DataBase.txt");
+            Scanner myReader = new Scanner(fisier_medic);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] arg_of_Data=data.split(",");
+                Medic medic = new Medic();
+                medic.setCNP(arg_of_Data[0]);
+                medic.setNume(arg_of_Data[1]);
+                medic.setPrenume(arg_of_Data[2]);
+                medic.setAdresa(arg_of_Data[3]);
+                medic.setTelefon(arg_of_Data[4]);
+                medic.setSpecializare(arg_of_Data[5]);
+                medic.setAni_Experienta(Integer.parseInt(arg_of_Data[6]));
+                Calendar cal = Calendar.getInstance();
+                cal.set(Integer.parseInt(arg_of_Data[7]),Integer.parseInt(arg_of_Data[8]),Integer.parseInt(arg_of_Data[9]));
+                medic.setData_Angajarii(cal);
+                Medici.put(arg_of_Data[0],medic);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Fisierul Medic_DataBase.txt nu a fost gasit!!!");
+            e.printStackTrace();
+        }
+
+        try {
+            File fisier_programare = new File("DataBase/Programare_DataBase.txt");
+            Scanner myReader = new Scanner(fisier_programare);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] arg_of_Data=data.split(",");
+                Programare programare = new Programare();
+                Calendar cal = Calendar.getInstance();
+                cal.set(Integer.parseInt(arg_of_Data[0]),Integer.parseInt(arg_of_Data[1]),Integer.parseInt(arg_of_Data[2]),Integer.parseInt(arg_of_Data[3]),Integer.parseInt(arg_of_Data[4]));
+                programare.setData(cal);
+                programare.setDetalii_Programare(arg_of_Data[5]);
+                programare.setRecomandari(arg_of_Data[6]);
+                programare.setCNP_Client(arg_of_Data[7]);
+                programare.setCNP_Medic(arg_of_Data[8]);
+                Programari.add(programare);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Fisierul Programare_DataBase.txt nu a fost gasit!!!");
+            e.printStackTrace();
+        }
+
+        try {
+            File fisier_reteta = new File("DataBase/Reteta_DataBase.txt");
+            Scanner myReader = new Scanner(fisier_reteta);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] arg_of_Data=data.split(",");
+                Reteta reteta = new Reteta();
+                reteta.setDurata(arg_of_Data[0]);
+                int nr=Integer.parseInt(arg_of_Data[1]);
+                int count=2;
+                for( int i=0;i<nr;++i)
+                {
+                    Medicament medicament = new Medicament();
+                    medicament.setDenumire(arg_of_Data[count]);
+                    medicament.setMod_Administrare(arg_of_Data[count+1]);
+                    medicament.setProspect(arg_of_Data[count+2]);
+                    reteta.getLista_medicamente().put(medicament.getDenumire(),medicament);
+
+                    count+=3;
+                }
+                Retete.add(reteta);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Fisierul Reteta_DataBase.txt nu a fost gasit!!!");
+            e.printStackTrace();
+        }
+
+    }
+
+    //Scrierea in fisier
+    public static void scriere_DataBase(HashMap<String, Client> Clienti,HashMap<String, Medic> Medici,ArrayList<Programare> Programari,ArrayList<Reteta> Retete,ArrayList<Echipament> Echipamente) throws IOException {
+
+        FileWriter scriereClient = new FileWriter("DataBase/Client_DataBase.txt");
+        for(Map.Entry x: Clienti.entrySet())
+        {
+            scriereClient.write(((Client) x.getValue()).getCNP()
+                    +","+((Client) x.getValue()).getNume()
+                    +","+((Client) x.getValue()).getPrenume()
+                    +","+ ((Client) x.getValue()).getAdresa()
+                    +","+ ((Client) x.getValue()).getTelefon()
+                    +","+((Client) x.getValue()).isAsigurat()
+                    +","+((Client) x.getValue()).isRezultat_Test_COVID()
+                    +","+ ((Client) x.getValue()).isSalariat()
+                    +","+((Client) x.getValue()).getBoli()
+                    +","+((Client) x.getValue()).getAlergeni()
+                    +","+((Client) x.getValue()).getGrupa_Sange()+"\n");
+        }
+        scriereClient.close();
+
+
+        FileWriter scriereMedic = new FileWriter("DataBase/Medic_DataBase.txt");
+        for(Map.Entry x: Medici.entrySet())
+        {
+            scriereMedic.write(((Medic) x.getValue()).getCNP()
+                    +","+((Medic) x.getValue()).getNume()
+                    +","+((Medic) x.getValue()).getPrenume()
+                    +","+((Medic) x.getValue()).getAdresa()
+                    +","+((Medic) x.getValue()).getTelefon()
+                    +","+((Medic) x.getValue()).getSpecializare()
+                    +","+((Medic) x.getValue()).getAni_Experienta()
+                    +","+((Medic) x.getValue()).getData_Angajarii().get(Calendar.DATE)
+                    +","+((Medic) x.getValue()).getData_Angajarii().get(Calendar.MONTH)
+                    +","+((Medic) x.getValue()).getData_Angajarii().get(Calendar.YEAR)+"\n");
+        }
+        scriereMedic.close();
+
+        FileWriter scriereEchipament = new FileWriter("DataBase/Echipament_DataBase.txt");
+        for(Echipament x:Echipamente)
+        {
+            scriereEchipament.write(x.getNume_Producator()
+                    +","+x.getTelefon()
+                    +","+x.getNume_Echipament()
+                    +","+x.getAn_Productie()
+                    +","+x.getPret()+"\n");
+        }
+        scriereEchipament.close();
+
+        FileWriter scriereProgramare = new FileWriter("DataBase/Programare_DataBase.txt");
+        for(Programare x:Programari)
+            scriereProgramare.write(x.getData().get(Calendar.DATE) +","
+                    + x.getData().get(Calendar.MONTH)
+                    + "," + x.getData().get(Calendar.YEAR)
+                    + ","  + x.getData().get(Calendar.HOUR)
+                    + ","  + x.getData().get(Calendar.MINUTE)
+                    + ","  + x.getDetalii_Programare()
+                    + ","  + x.getRecomandari()
+                    + ","  + x.getCNP_Client()
+                    + ","  + x.getCNP_Medic()+"\n");
+        scriereProgramare.close();
+
+        FileWriter scriereReteta = new FileWriter("DataBase/Reteta_DataBase.txt");
+        String str = "";
+        for(Reteta x:Retete) {
+            HashMap<String, Medicament> lista_medicamente = x.getLista_medicamente();
+            int count = 0;
+            for (Map.Entry y : lista_medicamente.entrySet()) {
+                ++count;
+                str.concat(((Medicament) y.getValue()).getDenumire() + "," +
+                        ((Medicament) y.getValue()).getMod_Administrare() +
+                        ((Medicament) y.getValue()).getProspect());
+            }
+            scriereReteta.write(x.getDurata() + "," + count + "," + str+"\n");
+        }
+        scriereReteta.close();
+    }
+
 
     //1) Adaugare Client in cadrul cabinetului medical.
     public static Client adaugare_Client() {
@@ -58,7 +268,7 @@ public class Servicii {
         System.out.println("Boli:");
         x.setBoli(scan.nextLine());
 
-        System.out.println("Alergeri:");
+        System.out.println("Alergeni:");
         x.setAlergeni(scan.nextLine());
 
         System.out.println("Grupa sange:");
@@ -134,7 +344,7 @@ public class Servicii {
         System.out.println("Boli:");
         x.setBoli(scan.nextLine());
 
-        System.out.println("Alergeri:");
+        System.out.println("Alergeni:");
         x.setAlergeni(scan.nextLine());
 
         System.out.println("Grupa sange:");
@@ -215,10 +425,11 @@ public class Servicii {
         cal.set(zi, luna, an, ora, minut);
         x.setData(cal);
 
-        System.out.println("Detalii Programare:");
+        System.out.print("Detalii Programare: ");
+        scan.nextLine();
         x.setDetalii_Programare(scan.nextLine());
 
-        System.out.println("Recomandari:");
+        System.out.print("Recomandari: ");
         x.setRecomandari(scan.nextLine());
 
         return x;

@@ -3,15 +3,15 @@ package PackageMedicament;
 public class Medicament {
     String Denumire;
     String Mod_Administrare;
-    String Prostect;
+    String Prospect;
 
     public Medicament() {
     }
 
-    public Medicament(String denumire, String mod_Administrare, String prostect) {
+    public Medicament(String denumire, String mod_Administrare, String prospect) {
         Denumire = denumire;
         Mod_Administrare = mod_Administrare;
-        Prostect = prostect;
+        Prospect = prospect;
     }
 
     public String getDenumire() {
@@ -30,15 +30,15 @@ public class Medicament {
         Mod_Administrare = mod_Administrare;
     }
 
-    public String getProstect() {
-        return Prostect;
+    public String getProspect() {
+        return Prospect;
     }
 
-    public void setProstect(String prostect) {
-        Prostect = prostect;
+    public void setProspect(String prospect) {
+        Prospect = prospect;
     }
     @Override
     public String toString(){
-        return Denumire + " " + Mod_Administrare + " " + Prostect;
+        return Denumire + " " + Mod_Administrare + " " + Prospect;
     }
 }

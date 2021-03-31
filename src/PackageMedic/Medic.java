@@ -1,17 +1,17 @@
 package PackageMedic;
 
 import PackagePersoana.Persoana;
-import java.util.Date;
+import java.util.Calendar;
 
 public class Medic extends Persoana {
     String Specializare;
     int Ani_Experienta;
-    Date Data_Angajarii;
+    Calendar Data_Angajarii;
 
     public Medic(String specializare) {
     }
 
-    public Medic(String CNP, String nume, String prenume, String adresa, String telefon, String specializare, int ani_Experienta, Date data_Angajarii) {
+    public Medic(String CNP, String nume, String prenume, String adresa, String telefon, String specializare, int ani_Experienta, Calendar data_Angajarii) {
         super(CNP, nume, prenume, adresa, telefon);
         Specializare = specializare;
         Ani_Experienta = ani_Experienta;
@@ -34,11 +34,11 @@ public class Medic extends Persoana {
         Ani_Experienta = ani_Experienta;
     }
 
-    public Date getData_Angajarii() {
+    public Calendar getData_Angajarii() {
         return Data_Angajarii;
     }
 
-    public void setData_Angajarii(Date data_Angajarii) {
+    public void setData_Angajarii(Calendar data_Angajarii) {
         Data_Angajarii = data_Angajarii;
     }
 

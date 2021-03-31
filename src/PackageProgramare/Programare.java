@@ -1,8 +1,8 @@
 package PackageProgramare;
-import java.util.Date;
+import java.util.Calendar;
 
 public class Programare {
-    Date Data;
+    Calendar Data;
     String Detalii_Programare;
     String Recomandari;
     String CNP_Client;
@@ -11,7 +11,7 @@ public class Programare {
     public Programare() {
     }
 
-    public Programare(Date data, String detalii_Programare, String recomandari, String CNP_Client, String CNP_Medic) {
+    public Programare(Calendar data, String detalii_Programare, String recomandari, String CNP_Client, String CNP_Medic) {
         Data = data;
         Detalii_Programare = detalii_Programare;
         Recomandari = recomandari;
@@ -19,11 +19,11 @@ public class Programare {
         this.CNP_Medic = CNP_Medic;
     }
 
-    public Date getData() {
+    public Calendar getData() {
         return Data;
     }
 
-    public void setData(Date data) {
+    public void setData(Calendar data) {
         Data = data;
     }
 

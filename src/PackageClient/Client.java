@@ -8,19 +8,19 @@ public class Client extends Persoana {
     boolean Salariat;
     String Boli;
     String Alergeni;
-    String Grupa_Stange;
+    String Grupa_Sange;
 
     public Client() {
     }
 
-    public Client(String CNP, String nume, String prenume, String adresa, String telefon, boolean asigurat, boolean rezultat_Test_COVID, boolean salariat, String boli, String alergeni, String grupa_Stange) {
+    public Client(String CNP, String nume, String prenume, String adresa, String telefon, boolean asigurat, boolean rezultat_Test_COVID, boolean salariat, String boli, String alergeni, String grupa_Sange) {
         super(CNP, nume, prenume, adresa, telefon);
         Asigurat = asigurat;
         Rezultat_Test_COVID = rezultat_Test_COVID;
         Salariat = salariat;
         Boli = boli;
         Alergeni = alergeni;
-        Grupa_Stange = grupa_Stange;
+        Grupa_Sange = grupa_Sange;
     }
 
     public boolean isAsigurat() {
@@ -63,16 +63,16 @@ public class Client extends Persoana {
         Alergeni = alergeni;
     }
 
-    public String getGrupa_Stange() {
-        return Grupa_Stange;
+    public String getGrupa_Sange() {
+        return Grupa_Sange;
     }
 
-    public void setGrupa_Stange(String grupa_Stange) {
-        Grupa_Stange = grupa_Stange;
+    public void setGrupa_Sange(String grupa_Sange) {
+        Grupa_Sange = grupa_Sange;
     }
 
     @Override
     public String toString(){
-        return super.toString() + " " + Boli + " " + Alergeni + " " + Grupa_Stange;
+        return super.toString() + " " + Boli + " " + Alergeni + " " + Grupa_Sange;
     }
 }

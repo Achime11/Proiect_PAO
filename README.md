@@ -5,9 +5,10 @@ Proiect PAO (Programare Cabinet Medical)
 
 -------- Programari Cabinet Medical --------
 
-#Am realizat un Proiect PAO cu :
-
-###Gestiunea unui Cabinet medicat unde se pot face programari de catre Medici
+# Am realizat un Proiect PAO cu :
+## O reprezentare a datelor din gestiunea unui Cabinet
+<img src="DataBase_Reprezentation.png"></img>
+### Gestiunea unui Cabinet medicat unde se pot face programari de catre Medici
 Cu un meniu interactiv, clasa servicii in care avem metodele:
 1. citire_DataBase //Citirea din fisiere
 2. scriere_DataBase //Scrierea in fisier

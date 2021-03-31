@@ -1,4 +1,5 @@
 package PackageProgramare;
+
 import java.util.Calendar;
 
 public class Programare {
@@ -60,7 +61,7 @@ public class Programare {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return CNP_Client + " " + CNP_Medic + " " + Data + " " + Detalii_Programare + " " + Recomandari;
     }
 }

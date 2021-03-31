@@ -1,10 +1,12 @@
 package PackageReteta;
+
 import PackageMedicament.Medicament;
 
 import java.util.HashMap;
+
 public class Reteta {
     String Durata;
-    HashMap<String,Medicament> lista_medicamente;
+    HashMap<String, Medicament> lista_medicamente;
 
     public Reteta() {
     }
@@ -29,8 +31,9 @@ public class Reteta {
     public void setLista_medicamente(HashMap<String, Medicament> lista_medicamente) {
         this.lista_medicamente = lista_medicamente;
     }
+
     @Override
-    public String toString (){
+    public String toString() {
         return Durata + " " + lista_medicamente;
     }
 }

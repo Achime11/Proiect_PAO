@@ -1,6 +1,7 @@
 package PackageMedic;
 
 import PackagePersoana.Persoana;
+
 import java.util.Calendar;
 
 public class Medic extends Persoana {
@@ -43,7 +44,7 @@ public class Medic extends Persoana {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return super.toString() + " " + Specializare;
     }
 }

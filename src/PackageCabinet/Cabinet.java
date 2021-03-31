@@ -1,4 +1,5 @@
 package PackageCabinet;
+
 import java.util.Date;
 
 public class Cabinet {
@@ -70,7 +71,7 @@ public class Cabinet {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return Nume + " " + Adresa + " " + Telefon;
 
     }

@@ -37,8 +37,9 @@ public class Medicament {
     public void setProspect(String prospect) {
         Prospect = prospect;
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return Denumire + " " + Mod_Administrare + " " + Prospect;
     }
 }

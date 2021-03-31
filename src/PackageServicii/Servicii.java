@@ -1,32 +1,29 @@
 package PackageServicii;
-import PackageClient.Client;
-import PackageMedic.Medic;
-import PackageMedicament.Medicament;
-import PackageProgramare.Programare;
-import PackageReteta.Reteta;
 
-import java.util.*; // random,scanner,arraylist,etc.
-import java.lang.*;
+import PackageClient.Client;
+import PackageEchipament.Echipament;
+import PackageMedic.Medic;
+import PackageProgramare.Programare;
+
+import java.util.*;
 
 public class Servicii {
     /*
-    citire_fisiere();
-    afisare_fisiere();
+    ("1. Adaugare Client in cadrul cabinetului medical.");
+    ("2. Afisare Clienti in cadrul cabinetului medical.");
+    ("3. Modificare Client in cadrul cabinetului medical.");
+    ("4. Stergere Client in cadrul cabinetului medical.");
+    ("5. Afisare Numar de Clienti cu COVID/Numar de Clienti (Statistica)");
+    ("6. Afisare Media anilor de experienta a Medicilor");
+    ("7. Afisarea celui mai vechi angajat (Medic)");
+    ("8. Adaugare programare in cadrul cabinetului medical.");
+    ("9. Afisarea programarilor in cadrul cabinetului medical.");
+    ("10. Afisare valoare medie a echipamentelor.");
+    ("0. Iesire.");
+     */
 
-    1)Adaugare Client
-    2)Afisare Client
-    3)Client Modificare
-    4)Client Stergere
-    5)Afisare Numar de Clienti cu COVID/Numar de Clienti (Statistica)
-    6)Afisare Medie ani experienta Medici
-    7)Cel mai vechi angajat (Medic)
-    8)Adaugare programare
-    9)Afisare programare
-    10)Valoarea medie a echipamentului
-    */
-
-    //1) Adaugare Client
-    static Client adaugare_Client() {
+    //1) Adaugare Client in cadrul cabinetului medical.
+    public static Client adaugare_Client() {
         Client x = new Client();
 
         Scanner scan = new Scanner(System.in);
@@ -71,35 +68,37 @@ public class Servicii {
         return x;
     }
 
-    //2) Afisare Client
-    static void afisare_Client(Client x){
-        System.out.println("CNP: "+" "+x.getCNP());
-        System.out.println("Nume Prenume: "+x.getNume()+" "+x.getPrenume());
-        System.out.println("Adresa: "+ " "+x.getAdresa());
-        System.out.println("Telefon: "+ " "+x.getTelefon());
+    //2) Afisare Clienti in cadrul cabinetului medical.
+    public static void afisare_Client(Client x) {
+        System.out.println();
+        System.out.println("-------------------------------------------------");
+        System.out.println("CNP: " + " " + x.getCNP());
+        System.out.println("Nume Prenume: " + x.getNume() + " " + x.getPrenume());
+        System.out.println("Adresa: " + " " + x.getAdresa());
+        System.out.println("Telefon: " + " " + x.getTelefon());
 
-        if(x.isAsigurat())
+        if (x.isAsigurat())
             System.out.println("Asigurat: Da");
         else
             System.out.println("Asigurat: Nu");
 
-        if(x.isRezultat_Test_COVID())
+        if (x.isRezultat_Test_COVID())
             System.out.println("Rezultat Test COVID: POZITIV");
         else
             System.out.println("Rezultat Test COVID: NEGATIV");
 
-        if(x.isSalariat())
+        if (x.isSalariat())
             System.out.println("Salariat: Da");
         else
             System.out.println("Salariat: Nu");
 
-        System.out.println("Boli: "+x.getBoli());
-        System.out.println("Alergeni: "+ " "+x.getAlergeni());
-        System.out.println("Grupa Sange: "+ " "+x.getGrupa_Sange());
+        System.out.println("Boli: " + x.getBoli());
+        System.out.println("Alergeni: " + " " + x.getAlergeni());
+        System.out.println("Grupa Sange: " + " " + x.getGrupa_Sange());
     }
 
-    //3) Modificare Client
-    static Client modificare_Client(){
+    //3) Modificare Client in cadrul cabinetului medical.
+    public static Client modificare_Client() {
 
         Client x = new Client();
 
@@ -145,53 +144,75 @@ public class Servicii {
 
     }
 
-    //5 Afisare numar clienti COVID
-    static void Statistica_COVID(ArrayList<Client>x) {
-        int nrTotal=0;
-        int nrCovid=0;
+    //5 Afisare Numar de Clienti cu COVID/Numar de Clienti (Statistica)
+    public static void Statistica_COVID(HashMap<String,Client> list) {
+        int nrTotal = 0;
+        int nrCovid = 0;
 
-        for(Client it:x)
-        {
+        for (Map.Entry x: list.entrySet()) {
             nrTotal++;
-            if(it.isRezultat_Test_COVID())
+            if (((Client)x.getValue()).isRezultat_Test_COVID())
                 nrCovid++;
         }
 
-        System.out.println("Procentajul de clienti ce au COVID:" + (float)nrCovid/nrTotal*100);
+        System.out.println("Procentajul de clienti ce au COVID:" + (float) nrCovid / nrTotal * 100);
     }
 
-    //6)Afisare Medie ani experienta Medici
-    static void afisare_Medie_Experienta(ArrayList<Medic> x){
-        int count=0;
-        int ani_experienta=0;
-        for(Medic it: x) {
-            ani_experienta+=it.getAni_Experienta();
+    //6) Afisare Media anilor de experienta a Medicilor
+    public static void afisare_Medie_Experienta(HashMap<String,Medic> list) {
+        int count = 0;
+        int ani_experienta = 0;
+        for (Map.Entry x: list.entrySet()) {
+            ani_experienta += ((Medic)x.getValue()).getAni_Experienta();
             ++count;
         }
-        System.out.println("Media de experienta a medicilor: "+(float)ani_experienta/count+" ani");
+        System.out.println("Media de experienta a medicilor: " + (float) ani_experienta / count + " ani");
     }
 
-    //8)Adaugare programare
-    static Programare adaugare_Programare(String cnp_client, String cnp_medic) {
-        Programare x = new Programare();
+    //7) Afisarea celui mai vechi angajat (Medic)
+    public static void afisare_cel_mai_vechi_Medic(HashMap<String,Medic> list) {
+        Calendar minDate = Calendar.getInstance();
 
+        String Nume = "", Prenume = "", Specializare = "";
+
+        for (Map.Entry x: list.entrySet()) {
+            if (minDate.after(((Medic)x.getValue()).getData_Angajarii())) {
+                minDate = ((Medic)x.getValue()).getData_Angajarii();
+                Nume = ((Medic)x.getValue()).getNume();
+                Prenume = ((Medic)x.getValue()).getPrenume();
+                Specializare = ((Medic)x.getValue()).getSpecializare();
+            }
+
+        }
+        if (Nume.equals("") && Prenume.equals("") && Specializare.equals(""))
+            System.out.println("Nu exista cel mai vechi medic angajat:");
+        else
+            System.out.println("Cel mai vechi medic angajat este:" + Nume + " " + Prenume + " " + Specializare);
+    }
+
+    //8) Adaugare programare in cadrul cabinetului medical.
+    public static Programare adaugare_Programare(String cnp_client, String cnp_medic) {
+        Programare x = new Programare();
         Scanner scan = new Scanner(System.in);
-        int zi,luna,an,ora,minut;
+        int zi, luna, an, ora, minut;
+
+        x.setCNP_Client(cnp_client);
+        x.setCNP_Medic(cnp_medic);
 
         System.out.println("Data Programari:");
         System.out.println("Ziua:");
-        zi=scan.nextInt();
+        zi = scan.nextInt();
         System.out.println("Luna:");
-        luna=scan.nextInt();
+        luna = scan.nextInt();
         System.out.println("Anul:");
-        an=scan.nextInt();
+        an = scan.nextInt();
         System.out.println("Ora:");
-        ora=scan.nextInt();
+        ora = scan.nextInt();
         System.out.println("Minutul:");
-        minut=scan.nextInt();
+        minut = scan.nextInt();
 
         Calendar cal = Calendar.getInstance();
-        cal.set(zi,luna,an,ora,minut);
+        cal.set(zi, luna, an, ora, minut);
         x.setData(cal);
 
         System.out.println("Detalii Programare:");
@@ -200,48 +221,30 @@ public class Servicii {
         System.out.println("Recomandari:");
         x.setRecomandari(scan.nextLine());
 
-        System.out.println("CNP Client:");
-        x.setCNP_Client(scan.nextLine());
-
-        System.out.println("CNPMedic:");
-        x.setCNP_Medic(scan.nextLine());
-
         return x;
     }
 
-    public static void main(String[] args){
-        System.out.println("Test afisare");
-        Scanner scanner = new Scanner(System.in);
-        String var = "String";
-        String x = "String";
-        String y = new String("String");
+    //9) Afisarea programarilor in cadrul cabinetului medical.
+    public static void afisare_Programare(Programare x) {
 
-        if (x.equals(y))
-            System.out.println("True");
+        System.out.println("Data Programarii este: Ziua" + x.getData().get(Calendar.DATE) + " Luna " + x.getData().get(Calendar.MONTH) + " Anul " + x.getData().get(Calendar.YEAR) + " Ora " + x.getData().get(Calendar.HOUR) + " Minutul " + x.getData().get(Calendar.MINUTE));
+        System.out.println("Detalii Programare: " + x.getDetalii_Programare());
+        System.out.println("Recomandari: " + x.getRecomandari());
+        System.out.println("CNP Client: " + x.getCNP_Client());
+        System.out.println("CNP Medic: " + x.getCNP_Medic());
 
-        for(int i=0;i<=100;++i)
-            System.out.println(i);
-        System.out.println(var);
-
-        Reteta b = new Reteta();
-
-        b.setDurata(scanner.nextLine());
-        HashMap<String,Medicament> list_med = new HashMap<>();
-        for(int i=0;i<2;i++)
-        {
-            Medicament med = new Medicament();
-
-            String den = scanner.nextLine();
-            String Mod_Administrare = scanner.nextLine();
-            String Prospect = scanner.nextLine();
-
-            med.setDenumire(den);
-            med.setMod_Administrare(Mod_Administrare);
-            med.setProspect(Prospect);
-
-            list_med.put(den , med);
-        }
-        b.setLista_medicamente(list_med);
-        System.out.println(b.toString());
     }
+
+    //10) Afisare valoare medie a echipamentelor.
+    public static void afisare_Valoarea_media_echipamente(ArrayList<Echipament> list) {
+        int count = 0;
+        float valoare = 0;
+        for (Echipament it : list) {
+            ++count;
+            valoare += it.getPret();
+        }
+
+        System.out.println(valoare/(float)count);
+    }
+
 }

@@ -42,7 +42,7 @@ public class Echipament extends Producator {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return super.toString() + " " + Nume_Echipament + " " + An_Productie + " " + Pret;
     }
 }

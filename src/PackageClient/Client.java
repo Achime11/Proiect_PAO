@@ -72,7 +72,7 @@ public class Client extends Persoana {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return super.toString() + " " + Boli + " " + Alergeni + " " + Grupa_Sange;
     }
 }

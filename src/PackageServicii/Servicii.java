@@ -92,7 +92,7 @@ public class Servicii {
                 medic.setSpecializare(arg_of_Data[5]);
                 medic.setAni_Experienta(Integer.parseInt(arg_of_Data[6]));
                 Calendar cal = Calendar.getInstance();
-                cal.set(Integer.parseInt(arg_of_Data[7]),Integer.parseInt(arg_of_Data[8]),Integer.parseInt(arg_of_Data[9]));
+                cal.set(Integer.parseInt(arg_of_Data[9]),Integer.parseInt(arg_of_Data[8]),Integer.parseInt(arg_of_Data[7]));
                 medic.setData_Angajarii(cal);
                 Medici.put(arg_of_Data[0],medic);
             }
@@ -110,7 +110,7 @@ public class Servicii {
                 String[] arg_of_Data=data.split(",");
                 Programare programare = new Programare();
                 Calendar cal = Calendar.getInstance();
-                cal.set(Integer.parseInt(arg_of_Data[0]),Integer.parseInt(arg_of_Data[1]),Integer.parseInt(arg_of_Data[2]),Integer.parseInt(arg_of_Data[3]),Integer.parseInt(arg_of_Data[4]));
+                cal.set(Integer.parseInt(arg_of_Data[2]),Integer.parseInt(arg_of_Data[1]),Integer.parseInt(arg_of_Data[0]),Integer.parseInt(arg_of_Data[3]),Integer.parseInt(arg_of_Data[4]));
                 programare.setData(cal);
                 programare.setDetalii_Programare(arg_of_Data[5]);
                 programare.setRecomandari(arg_of_Data[6]);
@@ -422,7 +422,7 @@ public class Servicii {
         minut = scan.nextInt();
 
         Calendar cal = Calendar.getInstance();
-        cal.set(zi, luna, an, ora, minut);
+        cal.set(an, luna, zi, ora, minut);
         x.setData(cal);
 
         System.out.print("Detalii Programare: ");

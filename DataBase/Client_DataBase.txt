@@ -1,2 +1,0 @@
-501,Andrei,Duta,Strada Grui nr 15,0728457298,true,true,false,-,sare,AB+
-51,Achime,Valentin,Str. Grui Nr 152,0749554569,false,true,true,di toate,nu prea,AB+

@@ -1,16 +1,14 @@
 package servicii;
 
-import persoana.Client;
 import echipament.Echipament;
+import medicament.Reteta;
+import persoana.Client;
 import persoana.Medic;
 import persoana.Programare;
-import medicament.Reteta;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Main {
     public static void initiziarizareMeniu() {
@@ -42,11 +40,14 @@ public class Main {
         ArrayList<Programare> Programari = new ArrayList<>();
         ArrayList<Reteta> Retete = new ArrayList<>();
         ArrayList<Echipament> Echipamente = new ArrayList<>();
-        Servicii.citireDataBase(Clienti,Medici,Programari,Retete,Echipamente);
+        Servicii.citireDataBase(Clienti, Medici, Programari, Retete, Echipamente);
         //main
         Scanner scan = new Scanner(System.in);
         int opt;
         do {
+            Date data = new Date();
+            SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            String timestamp = formater.format(data);
             initiziarizareMeniu();
             System.out.println();
             System.out.println();
@@ -55,6 +56,9 @@ public class Main {
             switch (opt) {
                 case 1:
                     Client client = Servicii.adaugareClient();
+                    data = new Date();
+                    timestamp = formater.format(data);
+                    Servicii.adaugareAudit("Adaugare client",timestamp);
                     Clienti.put(client.getCnp(), client);
                     System.out.println("Client adaugat!");
                     break;
@@ -62,6 +66,9 @@ public class Main {
                     System.out.println("Afisare Clienti");
                     for (Map.Entry x : Clienti.entrySet())
                         Servicii.afisareClient((Client) x.getValue());
+                    data = new Date();
+                    timestamp = formater.format(data);
+                    Servicii.adaugareAudit("Afisare clienti",timestamp);
                     break;
                 case 3:
                     System.out.println("Modificare Client(Introduceti datele clientului)");
@@ -71,11 +78,13 @@ public class Main {
                     System.out.println("Prenume: ");
                     String Prenume = scan.next();
                     for (Map.Entry x : Clienti.entrySet())
-                        if(Nume.equals(((Client)x.getValue()).getNume()) && Prenume.equals(((Client)x.getValue()).getPrenume()))
-                        {
+                        if (Nume.equals(((Client) x.getValue()).getNume()) && Prenume.equals(((Client) x.getValue()).getPrenume())) {
                             Client a = Servicii.modificareClient();
-                            Clienti.replace((String) x.getKey(),a);
+                            Clienti.replace((String) x.getKey(), a);
                         }
+                    data = new Date();
+                    timestamp = formater.format(data);
+                    Servicii.adaugareAudit("Modificare client",timestamp);
                     break;
                 case 4:
                     System.out.println("Stergere Client(Introduceti datele clientului)");
@@ -84,47 +93,67 @@ public class Main {
                     System.out.println("Prenume: ");
                     String Prenume_stergere = scan.next();
                     for (Map.Entry x : Clienti.entrySet())
-                        if(Nume_stergere.equals(((Client)x.getValue()).getNume()) && Prenume_stergere.equals(((Client)x.getValue()).getPrenume()))
-                        {
+                        if (Nume_stergere.equals(((Client) x.getValue()).getNume()) && Prenume_stergere.equals(((Client) x.getValue()).getPrenume())) {
                             Clienti.remove(x.getKey());
                             break;
                         }
+                    data = new Date();
+                    timestamp = formater.format(data);
+                    Servicii.adaugareAudit("Stergere client",timestamp);
                     break;
                 case 5:
                     System.out.println("Statistica COVID!");
                     Servicii.statisticaCOVID(Clienti);
+                    data = new Date();
+                    timestamp = formater.format(data);
+                    Servicii.adaugareAudit("Statistica COVID",timestamp);
                     break;
                 case 6:
-                    System.out.println("Afisare Media de experienta a Medicilor");
+                    System.out.println("Afisarea mediei de experienta a Medicilor");
                     Servicii.afisareMedieExperienta(Medici);
+                    data = new Date();
+                    timestamp = formater.format(data);
+                    Servicii.adaugareAudit("Afisarea mediei de experienta a Medicilor",timestamp);
                     break;
                 case 7:
-                    System.out.println("Afisare celui mai vechi medic!");
+                    System.out.println("Afisarea celui mai vechi medic!");
                     Servicii.afisareCelMaiVechiMedic(Medici);
+                    data = new Date();
+                    timestamp = formater.format(data);
+                    Servicii.adaugareAudit("Afisarea celui mai vechi medic",timestamp);
                     break;
                 case 8:
                     System.out.println("Date medici");
-                    for(Map.Entry x: Medici.entrySet())
-                        System.out.println(((Medic)x.getValue()).toString());
+                    for (Map.Entry x : Medici.entrySet())
+                        System.out.println(x.getValue().toString());
                     System.out.println("Adaugare programare");
                     System.out.println("CNP Client: ");
-                    String cnp_client=scan.next();
+                    String cnp_client = scan.next();
                     System.out.println("CNP Medic: ");
-                    String cnp_medic=scan.next();
-                    Programare aux = Servicii.adaugareProgramare(cnp_client,cnp_medic);
+                    String cnp_medic = scan.next();
+                    Programare aux = Servicii.adaugareProgramare(cnp_client, cnp_medic);
                     Programari.add(aux);
+                    data = new Date();
+                    timestamp = formater.format(data);
+                    Servicii.adaugareAudit("Adaugare programare",timestamp);
                     break;
                 case 9:
-                    System.out.println("Afisare Programari");
-                    for (Programare it:Programari)
+                    System.out.println("Afisarea programarilor");
+                    for (Programare it : Programari)
                         Servicii.afisareProgramare(it);
+                    data = new Date();
+                    timestamp = formater.format(data);
+                    Servicii.adaugareAudit("Afisarea programarilor",timestamp);
                     break;
                 case 10:
-                    System.out.println("Afisare Valoarea medie a echipamentelor!");
+                    System.out.println("Afisarea valori medii a echipamentelor!");
                     Servicii.afisareValoareaMediaEchipamente(Echipamente);
+                    data = new Date();
+                    timestamp = formater.format(data);
+                    Servicii.adaugareAudit("Afisarea valori medii a echipamentelor",timestamp);
                     break;
                 case 0:
-                    Servicii.scriereDataBase(Clienti,Medici,Programari,Retete,Echipamente);
+                    Servicii.scriereDataBase(Clienti, Medici, Programari, Retete, Echipamente);
                     System.exit(0);
                     break;
                 default:

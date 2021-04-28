@@ -1,4 +1,5 @@
 # Proiect_PAO
+
 Proiect PAO (Programare Cabinet Medical)
 
 -------- Achimescu Ionut-Valentin || Grupa 244 || Proiect PAO --------
@@ -6,10 +7,15 @@ Proiect PAO (Programare Cabinet Medical)
 -------- Programari Cabinet Medical --------
 
 # Am realizat un Proiect PAO cu :
+
 ## O reprezentare a datelor din gestiunea unui Cabinet
+
 <img src="DataBase_Reprezentation.png"></img>
+
 ### Gestiunea unui Cabinet medicat unde se pot face programari de catre Medici
+
 Cu un meniu interactiv, clasa servicii in care avem metodele:
+
 1. citire_DataBase //Citirea din fisiere
 2. scriere_DataBase //Scrierea in fisier
 3. adaugare_Client
@@ -21,7 +27,7 @@ Cu un meniu interactiv, clasa servicii in care avem metodele:
 9. adaugare_Programare
 10. afisare_Programare
 11. afisare_Valoarea_media_echipamente
- 
+
 -------- Meniul cu optiuni --------
 
 0. Iesire.

@@ -29,7 +29,7 @@ public class Servicii {
      */
 
     //Citirea din fisiere
-    public static void citire_DataBase(HashMap<String, Client> Clienti,HashMap<String, Medic> Medici,ArrayList<Programare> Programari,ArrayList<Reteta> Retete,ArrayList<Echipament> Echipamente){
+    public static void citireDataBase(HashMap<String, Client> Clienti, HashMap<String, Medic> Medici, ArrayList<Programare> Programari, ArrayList<Reteta> Retete, ArrayList<Echipament> Echipamente){
 
         try {
             File fisier_client = new File("DataBase/Client_DataBase.txt");
@@ -155,7 +155,7 @@ public class Servicii {
     }
 
     //Scrierea in fisier
-    public static void scriere_DataBase(HashMap<String, Client> Clienti,HashMap<String, Medic> Medici,ArrayList<Programare> Programari,ArrayList<Reteta> Retete,ArrayList<Echipament> Echipamente) throws IOException {
+    public static void scriereDataBase(HashMap<String, Client> Clienti, HashMap<String, Medic> Medici, ArrayList<Programare> Programari, ArrayList<Reteta> Retete, ArrayList<Echipament> Echipamente) throws IOException {
 
         FileWriter scriereClient = new FileWriter("DataBase/Client_DataBase.txt");
         for(Map.Entry x: Clienti.entrySet())
@@ -233,7 +233,7 @@ public class Servicii {
 
 
     //1) Adaugare Client in cadrul cabinetului medical.
-    public static Client adaugare_Client() {
+    public static Client adaugareClient() {
         Client x = new Client();
 
         Scanner scan = new Scanner(System.in);
@@ -279,7 +279,7 @@ public class Servicii {
     }
 
     //2) Afisare Clienti in cadrul cabinetului medical.
-    public static void afisare_Client(Client x) {
+    public static void afisareClient(Client x) {
         System.out.println();
         System.out.println("-------------------------------------------------");
         System.out.println("CNP: " + " " + x.getCnp());
@@ -308,7 +308,7 @@ public class Servicii {
     }
 
     //3) Modificare Client in cadrul cabinetului medical.
-    public static Client modificare_Client() {
+    public static Client modificareClient() {
 
         Client x = new Client();
 
@@ -355,7 +355,7 @@ public class Servicii {
     }
 
     //5 Afisare Numar de Clienti cu COVID/Numar de Clienti (Statistica)
-    public static void Statistica_COVID(HashMap<String,Client> list) {
+    public static void statisticaCOVID(HashMap<String,Client> list) {
         int nrTotal = 0;
         int nrCovid = 0;
 
@@ -369,7 +369,7 @@ public class Servicii {
     }
 
     //6) Afisare Media anilor de experienta a Medicilor
-    public static void afisare_Medie_Experienta(HashMap<String,Medic> list) {
+    public static void afisareMedieExperienta(HashMap<String,Medic> list) {
         int count = 0;
         int ani_experienta = 0;
         for (Map.Entry x: list.entrySet()) {
@@ -380,7 +380,7 @@ public class Servicii {
     }
 
     //7) Afisarea celui mai vechi angajat (Medic)
-    public static void afisare_cel_mai_vechi_Medic(HashMap<String,Medic> list) {
+    public static void afisareCelMaiVechiMedic(HashMap<String,Medic> list) {
         Calendar minDate = Calendar.getInstance();
 
         String Nume = "", Prenume = "", Specializare = "";
@@ -401,7 +401,7 @@ public class Servicii {
     }
 
     //8) Adaugare programare in cadrul cabinetului medical.
-    public static Programare adaugare_Programare(String cnp_client, String cnp_medic) {
+    public static Programare adaugareProgramare(String cnp_client, String cnp_medic) {
         Programare x = new Programare();
         Scanner scan = new Scanner(System.in);
         int zi, luna, an, ora, minut;
@@ -436,7 +436,7 @@ public class Servicii {
     }
 
     //9) Afisarea programarilor in cadrul cabinetului medical.
-    public static void afisare_Programare(Programare x) {
+    public static void afisareProgramare(Programare x) {
 
         System.out.println("Data Programarii este: Ziua" + x.getData().get(Calendar.DATE) + " Luna " + x.getData().get(Calendar.MONTH) + " Anul " + x.getData().get(Calendar.YEAR) + " Ora " + x.getData().get(Calendar.HOUR) + " Minutul " + x.getData().get(Calendar.MINUTE));
         System.out.println("Detalii Programare: " + x.getDetaliiProgramare());
@@ -447,7 +447,7 @@ public class Servicii {
     }
 
     //10) Afisare valoare medie a echipamentelor.
-    public static void afisare_Valoarea_media_echipamente(ArrayList<Echipament> list) {
+    public static void afisareValoareaMediaEchipamente(ArrayList<Echipament> list) {
         int count = 0;
         float valoare = 0;
         for (Echipament it : list) {

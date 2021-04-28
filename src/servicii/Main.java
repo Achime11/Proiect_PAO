@@ -42,7 +42,7 @@ public class Main {
         ArrayList<Programare> Programari = new ArrayList<>();
         ArrayList<Reteta> Retete = new ArrayList<>();
         ArrayList<Echipament> Echipamente = new ArrayList<>();
-        Servicii.citire_DataBase(Clienti,Medici,Programari,Retete,Echipamente);
+        Servicii.citireDataBase(Clienti,Medici,Programari,Retete,Echipamente);
         //main
         Scanner scan = new Scanner(System.in);
         int opt;
@@ -54,14 +54,14 @@ public class Main {
             opt = scan.nextInt();
             switch (opt) {
                 case 1:
-                    Client client = Servicii.adaugare_Client();
+                    Client client = Servicii.adaugareClient();
                     Clienti.put(client.getCnp(), client);
                     System.out.println("Client adaugat!");
                     break;
                 case 2:
                     System.out.println("Afisare Clienti");
                     for (Map.Entry x : Clienti.entrySet())
-                        Servicii.afisare_Client((Client) x.getValue());
+                        Servicii.afisareClient((Client) x.getValue());
                     break;
                 case 3:
                     System.out.println("Modificare Client(Introduceti datele clientului)");
@@ -73,7 +73,7 @@ public class Main {
                     for (Map.Entry x : Clienti.entrySet())
                         if(Nume.equals(((Client)x.getValue()).getNume()) && Prenume.equals(((Client)x.getValue()).getPrenume()))
                         {
-                            Client a = Servicii.modificare_Client();
+                            Client a = Servicii.modificareClient();
                             Clienti.replace((String) x.getKey(),a);
                         }
                     break;
@@ -92,15 +92,15 @@ public class Main {
                     break;
                 case 5:
                     System.out.println("Statistica COVID!");
-                    Servicii.Statistica_COVID(Clienti);
+                    Servicii.statisticaCOVID(Clienti);
                     break;
                 case 6:
                     System.out.println("Afisare Media de experienta a Medicilor");
-                    Servicii.afisare_Medie_Experienta(Medici);
+                    Servicii.afisareMedieExperienta(Medici);
                     break;
                 case 7:
                     System.out.println("Afisare celui mai vechi medic!");
-                    Servicii.afisare_cel_mai_vechi_Medic(Medici);
+                    Servicii.afisareCelMaiVechiMedic(Medici);
                     break;
                 case 8:
                     System.out.println("Date medici");
@@ -111,20 +111,20 @@ public class Main {
                     String cnp_client=scan.next();
                     System.out.println("CNP Medic: ");
                     String cnp_medic=scan.next();
-                    Programare aux = Servicii.adaugare_Programare(cnp_client,cnp_medic);
+                    Programare aux = Servicii.adaugareProgramare(cnp_client,cnp_medic);
                     Programari.add(aux);
                     break;
                 case 9:
                     System.out.println("Afisare Programari");
                     for (Programare it:Programari)
-                        Servicii.afisare_Programare(it);
+                        Servicii.afisareProgramare(it);
                     break;
                 case 10:
                     System.out.println("Afisare Valoarea medie a echipamentelor!");
-                    Servicii.afisare_Valoarea_media_echipamente(Echipamente);
+                    Servicii.afisareValoareaMediaEchipamente(Echipamente);
                     break;
                 case 0:
-                    Servicii.scriere_DataBase(Clienti,Medici,Programari,Retete,Echipamente);
+                    Servicii.scriereDataBase(Clienti,Medici,Programari,Retete,Echipamente);
                     System.exit(0);
                     break;
                 default:

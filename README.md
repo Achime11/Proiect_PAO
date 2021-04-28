@@ -2,9 +2,9 @@
 
 ## Proiect PAO (Programare Cabinet Medical)
 
-### ---------------------------- Achimescu Ionuț-Valentin || Grupa 244 || Proiect PAO -----------------------------
+### ----------------------- Achimescu Ionuț-Valentin || Grupa 244 || Proiect PAO ----------------------
 
-### -------------------------------------- Programări Cabinet Medical ---------------------------------------------
+### --------------------------------- Programări Cabinet Medical ----------------------------------------
 
 # Am realizat un Proiect PAO cu :
 

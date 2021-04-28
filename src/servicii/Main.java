@@ -1,11 +1,10 @@
-package PackageMain;
+package servicii;
 
-import PackageClient.Client;
-import PackageEchipament.Echipament;
-import PackageMedic.Medic;
-import PackageProgramare.Programare;
-import PackageReteta.Reteta;
-import PackageServicii.Servicii;
+import persoana.Client;
+import echipament.Echipament;
+import persoana.Medic;
+import persoana.Programare;
+import medicament.Reteta;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public class Main {
             switch (opt) {
                 case 1:
                     Client client = Servicii.adaugare_Client();
-                    Clienti.put(client.getCNP(), client);
+                    Clienti.put(client.getCnp(), client);
                     System.out.println("Client adaugat!");
                     break;
                 case 2:

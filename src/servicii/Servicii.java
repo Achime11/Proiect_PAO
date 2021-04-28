@@ -1,11 +1,11 @@
-package PackageServicii;
+package servicii;
 
-import PackageClient.Client;
-import PackageEchipament.Echipament;
-import PackageMedic.Medic;
-import PackageMedicament.Medicament;
-import PackageProgramare.Programare;
-import PackageReteta.Reteta;
+import persoana.Client;
+import echipament.Echipament;
+import persoana.Medic;
+import medicament.Medicament;
+import persoana.Programare;
+import medicament.Reteta;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,7 +29,7 @@ public class Servicii {
      */
 
     //Citirea din fisiere
-    public static  void citire_DataBase(HashMap<String, Client> Clienti,HashMap<String, Medic> Medici,ArrayList<Programare> Programari,ArrayList<Reteta> Retete,ArrayList<Echipament> Echipamente){
+    public static void citire_DataBase(HashMap<String, Client> Clienti,HashMap<String, Medic> Medici,ArrayList<Programare> Programari,ArrayList<Reteta> Retete,ArrayList<Echipament> Echipamente){
 
         try {
             File fisier_client = new File("DataBase/Client_DataBase.txt");
@@ -38,17 +38,17 @@ public class Servicii {
                 String data = myReader.nextLine();
                 String[] arg_of_Data=data.split(",");
                 Client client = new Client();
-                client.setCNP(arg_of_Data[0]);
+                client.setCnp(arg_of_Data[0]);
                 client.setNume(arg_of_Data[1]);
                 client.setPrenume(arg_of_Data[2]);
                 client.setAdresa(arg_of_Data[3]);
                 client.setTelefon(arg_of_Data[4]);
                 client.setAsigurat(Boolean.parseBoolean(arg_of_Data[5]));
-                client.setRezultat_Test_COVID(Boolean.parseBoolean(arg_of_Data[6]));
+                client.setRezultatTestCOVID(Boolean.parseBoolean(arg_of_Data[6]));
                 client.setSalariat(Boolean.parseBoolean(arg_of_Data[7]));
                 client.setBoli(arg_of_Data[8]);
                 client.setAlergeni(arg_of_Data[9]);
-                client.setGrupa_Sange(arg_of_Data[10]);
+                client.setGrupaSange(arg_of_Data[10]);
                 Clienti.put(arg_of_Data[0],client);
             }
             myReader.close();
@@ -64,10 +64,10 @@ public class Servicii {
                 String data = myReader.nextLine();
                 String[] arg_of_Data=data.split(",");
                 Echipament echipament = new Echipament();
-                echipament.setNume_Producator(arg_of_Data[0]);
+                echipament.setNumeProducator(arg_of_Data[0]);
                 echipament.setTelefon(arg_of_Data[1]);
-                echipament.setNume_Echipament(arg_of_Data[2]);
-                echipament.setAn_Productie(Integer.parseInt(arg_of_Data[3]));
+                echipament.setNumeEchipament(arg_of_Data[2]);
+                echipament.setAnProductie(Integer.parseInt(arg_of_Data[3]));
                 echipament.setPret(Float.parseFloat(arg_of_Data[4]));
                 Echipamente.add(echipament);
             }
@@ -84,16 +84,16 @@ public class Servicii {
                 String data = myReader.nextLine();
                 String[] arg_of_Data=data.split(",");
                 Medic medic = new Medic();
-                medic.setCNP(arg_of_Data[0]);
+                medic.setCnp(arg_of_Data[0]);
                 medic.setNume(arg_of_Data[1]);
                 medic.setPrenume(arg_of_Data[2]);
                 medic.setAdresa(arg_of_Data[3]);
                 medic.setTelefon(arg_of_Data[4]);
                 medic.setSpecializare(arg_of_Data[5]);
-                medic.setAni_Experienta(Integer.parseInt(arg_of_Data[6]));
+                medic.setAniExperienta(Integer.parseInt(arg_of_Data[6]));
                 Calendar cal = Calendar.getInstance();
                 cal.set(Integer.parseInt(arg_of_Data[9]),Integer.parseInt(arg_of_Data[8]),Integer.parseInt(arg_of_Data[7]));
-                medic.setData_Angajarii(cal);
+                medic.setDataAngajarii(cal);
                 Medici.put(arg_of_Data[0],medic);
             }
             myReader.close();
@@ -112,10 +112,10 @@ public class Servicii {
                 Calendar cal = Calendar.getInstance();
                 cal.set(Integer.parseInt(arg_of_Data[2]),Integer.parseInt(arg_of_Data[1]),Integer.parseInt(arg_of_Data[0]),Integer.parseInt(arg_of_Data[3]),Integer.parseInt(arg_of_Data[4]));
                 programare.setData(cal);
-                programare.setDetalii_Programare(arg_of_Data[5]);
+                programare.setDetaliiProgramare(arg_of_Data[5]);
                 programare.setRecomandari(arg_of_Data[6]);
-                programare.setCNP_Client(arg_of_Data[7]);
-                programare.setCNP_Medic(arg_of_Data[8]);
+                programare.setCnpClient(arg_of_Data[7]);
+                programare.setCnpMedic(arg_of_Data[8]);
                 Programari.add(programare);
             }
             myReader.close();
@@ -138,9 +138,9 @@ public class Servicii {
                 {
                     Medicament medicament = new Medicament();
                     medicament.setDenumire(arg_of_Data[count]);
-                    medicament.setMod_Administrare(arg_of_Data[count+1]);
+                    medicament.setModAdministrare(arg_of_Data[count+1]);
                     medicament.setProspect(arg_of_Data[count+2]);
-                    reteta.getLista_medicamente().put(medicament.getDenumire(),medicament);
+                    reteta.getListaMedicamente().put(medicament.getDenumire(),medicament);
 
                     count+=3;
                 }
@@ -160,17 +160,17 @@ public class Servicii {
         FileWriter scriereClient = new FileWriter("DataBase/Client_DataBase.txt");
         for(Map.Entry x: Clienti.entrySet())
         {
-            scriereClient.write(((Client) x.getValue()).getCNP()
+            scriereClient.write(((Client) x.getValue()).getCnp()
                     +","+((Client) x.getValue()).getNume()
                     +","+((Client) x.getValue()).getPrenume()
                     +","+ ((Client) x.getValue()).getAdresa()
                     +","+ ((Client) x.getValue()).getTelefon()
                     +","+((Client) x.getValue()).isAsigurat()
-                    +","+((Client) x.getValue()).isRezultat_Test_COVID()
+                    +","+((Client) x.getValue()).isRezultatTestCOVID()
                     +","+ ((Client) x.getValue()).isSalariat()
                     +","+((Client) x.getValue()).getBoli()
                     +","+((Client) x.getValue()).getAlergeni()
-                    +","+((Client) x.getValue()).getGrupa_Sange()+"\n");
+                    +","+((Client) x.getValue()).getGrupaSange()+"\n");
         }
         scriereClient.close();
 
@@ -178,26 +178,26 @@ public class Servicii {
         FileWriter scriereMedic = new FileWriter("DataBase/Medic_DataBase.txt");
         for(Map.Entry x: Medici.entrySet())
         {
-            scriereMedic.write(((Medic) x.getValue()).getCNP()
+            scriereMedic.write(((Medic) x.getValue()).getCnp()
                     +","+((Medic) x.getValue()).getNume()
                     +","+((Medic) x.getValue()).getPrenume()
                     +","+((Medic) x.getValue()).getAdresa()
                     +","+((Medic) x.getValue()).getTelefon()
                     +","+((Medic) x.getValue()).getSpecializare()
-                    +","+((Medic) x.getValue()).getAni_Experienta()
-                    +","+((Medic) x.getValue()).getData_Angajarii().get(Calendar.DATE)
-                    +","+((Medic) x.getValue()).getData_Angajarii().get(Calendar.MONTH)
-                    +","+((Medic) x.getValue()).getData_Angajarii().get(Calendar.YEAR)+"\n");
+                    +","+((Medic) x.getValue()).getAniExperienta()
+                    +","+((Medic) x.getValue()).getDataAngajarii().get(Calendar.DATE)
+                    +","+((Medic) x.getValue()).getDataAngajarii().get(Calendar.MONTH)
+                    +","+((Medic) x.getValue()).getDataAngajarii().get(Calendar.YEAR)+"\n");
         }
         scriereMedic.close();
 
         FileWriter scriereEchipament = new FileWriter("DataBase/Echipament_DataBase.txt");
         for(Echipament x:Echipamente)
         {
-            scriereEchipament.write(x.getNume_Producator()
+            scriereEchipament.write(x.getNumeProducator()
                     +","+x.getTelefon()
-                    +","+x.getNume_Echipament()
-                    +","+x.getAn_Productie()
+                    +","+x.getNumeEchipament()
+                    +","+x.getAnProductie()
                     +","+x.getPret()+"\n");
         }
         scriereEchipament.close();
@@ -209,21 +209,21 @@ public class Servicii {
                     + "," + x.getData().get(Calendar.YEAR)
                     + ","  + x.getData().get(Calendar.HOUR)
                     + ","  + x.getData().get(Calendar.MINUTE)
-                    + ","  + x.getDetalii_Programare()
+                    + ","  + x.getDetaliiProgramare()
                     + ","  + x.getRecomandari()
-                    + ","  + x.getCNP_Client()
-                    + ","  + x.getCNP_Medic()+"\n");
+                    + ","  + x.getCnpClient()
+                    + ","  + x.getCnpMedic()+"\n");
         scriereProgramare.close();
 
         FileWriter scriereReteta = new FileWriter("DataBase/Reteta_DataBase.txt");
         String str = "";
         for(Reteta x:Retete) {
-            HashMap<String, Medicament> lista_medicamente = x.getLista_medicamente();
+            HashMap<String, Medicament> lista_medicamente = x.getListaMedicamente();
             int count = 0;
             for (Map.Entry y : lista_medicamente.entrySet()) {
                 ++count;
                 str.concat(((Medicament) y.getValue()).getDenumire() + "," +
-                        ((Medicament) y.getValue()).getMod_Administrare() +
+                        ((Medicament) y.getValue()).getModAdministrare() +
                         ((Medicament) y.getValue()).getProspect());
             }
             scriereReteta.write(x.getDurata() + "," + count + "," + str+"\n");
@@ -239,7 +239,7 @@ public class Servicii {
         Scanner scan = new Scanner(System.in);
 
         System.out.println("CNP:");
-        x.setCNP(scan.nextLine());
+        x.setCnp(scan.nextLine());
 
         System.out.println("Nume:");
         x.setNume(scan.nextLine());
@@ -259,7 +259,7 @@ public class Servicii {
 
         System.out.println("Rezultatul testului COVID al clientului?(Pozitiv/Negativ)");
         String TestCovid = scan.nextLine().toLowerCase(Locale.ROOT);
-        x.setRezultat_Test_COVID(TestCovid.equals("pozitiv"));
+        x.setRezultatTestCOVID(TestCovid.equals("pozitiv"));
 
         System.out.println("Clientul este Salariat?(da/nu)");
         String Salariat = scan.nextLine().toLowerCase(Locale.ROOT);
@@ -272,7 +272,7 @@ public class Servicii {
         x.setAlergeni(scan.nextLine());
 
         System.out.println("Grupa sange:");
-        x.setGrupa_Sange(scan.nextLine());
+        x.setGrupaSange(scan.nextLine());
 
 
         return x;
@@ -282,7 +282,7 @@ public class Servicii {
     public static void afisare_Client(Client x) {
         System.out.println();
         System.out.println("-------------------------------------------------");
-        System.out.println("CNP: " + " " + x.getCNP());
+        System.out.println("CNP: " + " " + x.getCnp());
         System.out.println("Nume Prenume: " + x.getNume() + " " + x.getPrenume());
         System.out.println("Adresa: " + " " + x.getAdresa());
         System.out.println("Telefon: " + " " + x.getTelefon());
@@ -292,7 +292,7 @@ public class Servicii {
         else
             System.out.println("Asigurat: Nu");
 
-        if (x.isRezultat_Test_COVID())
+        if (x.isRezultatTestCOVID())
             System.out.println("Rezultat Test COVID: POZITIV");
         else
             System.out.println("Rezultat Test COVID: NEGATIV");
@@ -304,7 +304,7 @@ public class Servicii {
 
         System.out.println("Boli: " + x.getBoli());
         System.out.println("Alergeni: " + " " + x.getAlergeni());
-        System.out.println("Grupa Sange: " + " " + x.getGrupa_Sange());
+        System.out.println("Grupa Sange: " + " " + x.getGrupaSange());
     }
 
     //3) Modificare Client in cadrul cabinetului medical.
@@ -315,7 +315,7 @@ public class Servicii {
         Scanner scan = new Scanner(System.in);
 
         System.out.println("CNP:");
-        x.setCNP(scan.nextLine());
+        x.setCnp(scan.nextLine());
 
         System.out.println("Nume:");
         x.setNume(scan.nextLine());
@@ -335,7 +335,7 @@ public class Servicii {
 
         System.out.println("Rezultatul testului COVID al clientului?(Pozitiv/Negativ)");
         String TestCovid = scan.nextLine().toLowerCase(Locale.ROOT);
-        x.setRezultat_Test_COVID(TestCovid.equals("pozitiv"));
+        x.setRezultatTestCOVID(TestCovid.equals("pozitiv"));
 
         System.out.println("Clientul este Salariat?(da/nu)");
         String Salariat = scan.nextLine().toLowerCase(Locale.ROOT);
@@ -348,7 +348,7 @@ public class Servicii {
         x.setAlergeni(scan.nextLine());
 
         System.out.println("Grupa sange:");
-        x.setGrupa_Sange(scan.nextLine());
+        x.setGrupaSange(scan.nextLine());
 
         return x;
 
@@ -361,7 +361,7 @@ public class Servicii {
 
         for (Map.Entry x: list.entrySet()) {
             nrTotal++;
-            if (((Client)x.getValue()).isRezultat_Test_COVID())
+            if (((Client)x.getValue()).isRezultatTestCOVID())
                 nrCovid++;
         }
 
@@ -373,7 +373,7 @@ public class Servicii {
         int count = 0;
         int ani_experienta = 0;
         for (Map.Entry x: list.entrySet()) {
-            ani_experienta += ((Medic)x.getValue()).getAni_Experienta();
+            ani_experienta += ((Medic)x.getValue()).getAniExperienta();
             ++count;
         }
         System.out.println("Media de experienta a medicilor: " + (float) ani_experienta / count + " ani");
@@ -386,8 +386,8 @@ public class Servicii {
         String Nume = "", Prenume = "", Specializare = "";
 
         for (Map.Entry x: list.entrySet()) {
-            if (minDate.after(((Medic)x.getValue()).getData_Angajarii())) {
-                minDate = ((Medic)x.getValue()).getData_Angajarii();
+            if (minDate.after(((Medic)x.getValue()).getDataAngajarii())) {
+                minDate = ((Medic)x.getValue()).getDataAngajarii();
                 Nume = ((Medic)x.getValue()).getNume();
                 Prenume = ((Medic)x.getValue()).getPrenume();
                 Specializare = ((Medic)x.getValue()).getSpecializare();
@@ -406,8 +406,8 @@ public class Servicii {
         Scanner scan = new Scanner(System.in);
         int zi, luna, an, ora, minut;
 
-        x.setCNP_Client(cnp_client);
-        x.setCNP_Medic(cnp_medic);
+        x.setCnpClient(cnp_client);
+        x.setCnpMedic(cnp_medic);
 
         System.out.println("Data Programari:");
         System.out.println("Ziua:");
@@ -427,7 +427,7 @@ public class Servicii {
 
         System.out.print("Detalii Programare: ");
         scan.nextLine();
-        x.setDetalii_Programare(scan.nextLine());
+        x.setDetaliiProgramare(scan.nextLine());
 
         System.out.print("Recomandari: ");
         x.setRecomandari(scan.nextLine());
@@ -439,10 +439,10 @@ public class Servicii {
     public static void afisare_Programare(Programare x) {
 
         System.out.println("Data Programarii este: Ziua" + x.getData().get(Calendar.DATE) + " Luna " + x.getData().get(Calendar.MONTH) + " Anul " + x.getData().get(Calendar.YEAR) + " Ora " + x.getData().get(Calendar.HOUR) + " Minutul " + x.getData().get(Calendar.MINUTE));
-        System.out.println("Detalii Programare: " + x.getDetalii_Programare());
+        System.out.println("Detalii Programare: " + x.getDetaliiProgramare());
         System.out.println("Recomandari: " + x.getRecomandari());
-        System.out.println("CNP Client: " + x.getCNP_Client());
-        System.out.println("CNP Medic: " + x.getCNP_Medic());
+        System.out.println("CNP Client: " + x.getCnpClient());
+        System.out.println("CNP Medic: " + x.getCnpMedic());
 
     }
 

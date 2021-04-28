@@ -1,10 +1,10 @@
 # Proiect_PAO
 
-Proiect PAO (Programare Cabinet Medical)
+## Proiect PAO (Programare Cabinet Medical)
 
--------- Achimescu Ionut-Valentin || Grupa 244 || Proiect PAO --------
+### ---------------------------- Achimescu Ionuț-Valentin || Grupa 244 || Proiect PAO -----------------------------
 
--------- Programari Cabinet Medical --------
+### -------------------------------------- Programări Cabinet Medical ---------------------------------------------
 
 # Am realizat un Proiect PAO cu :
 
@@ -12,32 +12,39 @@ Proiect PAO (Programare Cabinet Medical)
 
 <img src="DataBase_Reprezentation.png"></img>
 
-### Gestiunea unui Cabinet medicat unde se pot face programari de catre Medici
+### Gestiunea unui Cabinet medical unde se pot face programări de către Medici din cabinet
 
 Cu un meniu interactiv, clasa servicii in care avem metodele:
 
-1. citire_DataBase //Citirea din fisiere
-2. scriere_DataBase //Scrierea in fisier
-3. adaugare_Client
-4. afisare_Client
-5. modificare_Client
-6. Statistica_COVID
-7. afisare_Medie_Experienta
-8. afisare_cel_mai_vechi_Medic
-9. adaugare_Programare
-10. afisare_Programare
-11. afisare_Valoarea_media_echipamente
+1. citireDataBase //Citirea din fișiere
+2. scriereDataBase //Scrierea in fișiere
+3. adaugareClient
+4. afisareClient
+5. modificareClient
+6. statisticaCOVID
+7. afisareMedieExperienta
+8. afisareCelMaiVechiMedic
+9. adaugareProgramare
+10. afisareProgramare
+11. afisareValoareaMedieEchipamente
 
--------- Meniul cu optiuni --------
+## ------------------------ Meniul interactiv cu opțiuni ------------------------
 
-0. Iesire.
-1. Adaugare Client in cadrul cabinetului medical.
-2. Afisare Clienti in cadrul cabinetului medical.
+0. Ieșire. (salvare in fișierele .csv a datelor)
+1. Adăugare Client in cadrul cabinetului medical.
+2. Afișare Clienți in cadrul cabinetului medical.
 3. Modificare Client in cadrul cabinetului medical.
-4. Stergere Client in cadrul cabinetului medical.
-5. Afisare Numar de Clienti cu COVID/Numar de Clienti (Statistica)
-6. Afisare Media anilor de experienta a Medicilor
-7. Afisarea celui mai vechi angajat (Medic)
-8. Adaugare programare in cadrul cabinetului medical.
-9. Afisarea programarilor in cadrul cabinetului medical.
-10. Afisare valoare medie a echipamentelor.
+4. Ștergere Client in cadrul cabinetului medical.
+5. Afișare Număr de Clienți cu COVID/Număr de Clienți (Statistica)
+6. Afișare Media anilor de experienta a Medicilor
+7. Afișarea celui mai vechi angajat (Medic)
+8. Adăugare programare in cadrul cabinetului medical.
+9. Afișarea programărilor in cadrul cabinetului medical.
+10. Afișarea valorii medii a echipamentelor.
+
+## Etapa 2
+
+1. Am extins proiectul din prima etapa prin realizarea persistentei utilizând fișiere .csv (o mare parte din cod deja era făcut in prima parte deoarece m-am gândit din prima la persistenta datelor pe care le salvam in fișiere .txt)
+2. La pornirea programului se vor încărca datele din fișiere utilizând serviciile create
+3. Realizarea unui serviciu de audit care scrie într-un fișier CSV de fiecare data când este executata una dintre acțiunile descrise in prima etapa.
+4. Am realiza servicii singleton generice pentru scrierea și citirea din fișiere.(WIP)

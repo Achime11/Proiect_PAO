@@ -1,14 +1,6 @@
 package echipament;
 
 public class Echipament {
-    public Producator getProducator() {
-        return producator;
-    }
-
-    public void setProducator(Producator producator) {
-        this.producator = producator;
-    }
-
     private Producator producator;
     private String numeEchipament;
     private int anProductie;
@@ -18,11 +10,21 @@ public class Echipament {
     }
 
     public Echipament(String numeProducator, String telefon, String numeEchipament, int anProductie, float pret) {
+        Producator prod = new Producator();
+        this.producator=prod;
         this.producator.setNumeProducator(numeProducator);
         this.producator.setTelefon(telefon);
         this.numeEchipament = numeEchipament;
         this.anProductie = anProductie;
         this.pret = pret;
+    }
+
+    public Producator getProducator() {
+        return producator;
+    }
+
+    public void setProducator(Producator producator) {
+        this.producator = producator;
     }
 
     public String getNumeEchipament() {

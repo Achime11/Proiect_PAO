@@ -41,6 +41,7 @@ public class Main {
         ArrayList<Reteta> Retete = new ArrayList<>();
         ArrayList<Echipament> Echipamente = new ArrayList<>();
         Servicii.citireDataBase(Clienti, Medici, Programari, Retete, Echipamente);
+        Servicii.citireDB(Clienti,Medici,Programari,Echipamente);
         //main
         Scanner scan = new Scanner(System.in);
         int opt;

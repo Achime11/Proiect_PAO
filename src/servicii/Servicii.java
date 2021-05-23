@@ -12,9 +12,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
+import static servicii.Queries.*;
+
 public class Servicii {
+    private static DbConnection dbConnection = DbConnection.getInstance();
+
     /*
     ("1. Adaugare Client in cadrul cabinetului medical.");
     ("2. Afisare Clienti in cadrul cabinetului medical.");
@@ -30,11 +37,26 @@ public class Servicii {
      */
 
     //Citirea din fisiere
+
+    //Convert Date to Calendar
+    private static Calendar dateToCalendar(Date date) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
+
+    }
+
+    //Convert Calendar to Date
+    private static Date calendarToDate(Calendar calendar) {
+        return calendar.getTime();
+    }
+
     public static void citireDataBase(HashMap<String, Client> Clienti, HashMap<String, Medic> Medici, ArrayList<Programare> Programari, ArrayList<Reteta> Retete, ArrayList<Echipament> Echipamente) {
 
         try {
-            File fisier_client = new File("DataBase/clientDataBase.csv");
-            Scanner myReader = new Scanner(fisier_client);
+            File fisierClient = new File("DataBase/clientDataBase.csv");
+            Scanner myReader = new Scanner(fisierClient);
             if (myReader.hasNextLine())
                 myReader.nextLine();
             while (myReader.hasNextLine()) {
@@ -61,8 +83,8 @@ public class Servicii {
         }
 
         try {
-            File fisier_echipament = new File("DataBase/echipamentDataBase.csv");
-            Scanner myReader = new Scanner(fisier_echipament);
+            File fisierEchipament = new File("DataBase/echipamentDataBase.csv");
+            Scanner myReader = new Scanner(fisierEchipament);
             if (myReader.hasNextLine())
                 myReader.nextLine();
             while (myReader.hasNextLine()) {
@@ -85,8 +107,8 @@ public class Servicii {
         }
 
         try {
-            File fisier_medic = new File("DataBase/medicDataBase.csv");
-            Scanner myReader = new Scanner(fisier_medic);
+            File fisierMedic = new File("DataBase/medicDataBase.csv");
+            Scanner myReader = new Scanner(fisierMedic);
             if (myReader.hasNextLine())
                 myReader.nextLine();
             while (myReader.hasNextLine()) {
@@ -112,8 +134,8 @@ public class Servicii {
         }
 
         try {
-            File fisier_programare = new File("DataBase/programareDataBase.csv");
-            Scanner myReader = new Scanner(fisier_programare);
+            File fisierProgramare = new File("DataBase/programareDataBase.csv");
+            Scanner myReader = new Scanner(fisierProgramare);
             if (myReader.hasNextLine())
                 myReader.nextLine();
             while (myReader.hasNextLine()) {
@@ -136,8 +158,8 @@ public class Servicii {
         }
 
         try {
-            File fisier_reteta = new File("DataBase/retetaDataBase.csv");
-            Scanner myReader = new Scanner(fisier_reteta);
+            File fisierReteta = new File("DataBase/retetaDataBase.csv");
+            Scanner myReader = new Scanner(fisierReteta);
             if (myReader.hasNextLine())
                 myReader.nextLine();
             while (myReader.hasNextLine()) {
@@ -243,6 +265,13 @@ public class Servicii {
         scriereReteta.close();
     }
 
+    // metoda de adaugare in audit.csv
+    public static void adaugareAudit(String numeActiune,String timestamp) throws IOException {
+
+        FileWriter scriereAudit = new FileWriter("DataBase/audit.csv", true);
+        scriereAudit.write(numeActiune+"," + timestamp + "\n");
+        scriereAudit.close();
+    }
 
     //1) Adaugare Client in cadrul cabinetului medical.
     public static Client adaugareClient() {
@@ -470,12 +499,52 @@ public class Servicii {
         System.out.println(valoare / (float) count);
     }
 
-    // metoda de adaugare in audit.csv
-    public static void adaugareAudit(String numeActiune,String timestamp) throws IOException {
+    // COMENZI APLICATE PE MY_SQL DATA_BASE
+    public static void citireDB(HashMap<String, Client> Clienti, HashMap<String, Medic> Medici, ArrayList<Programare> Programari, ArrayList<Echipament> Echipamente){
 
-        FileWriter scriereAudit = new FileWriter("DataBase/audit.csv", true);
-        scriereAudit.write(numeActiune+"," + timestamp + "\n");
-        scriereAudit.close();
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(READ_CLIENTI);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Client client = new Client(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getBoolean(6),resultSet.getBoolean(7),resultSet.getBoolean(8),resultSet.getString(9),resultSet.getString(10),resultSet.getString(11) );
+                Clienti.put(resultSet.getString(1),client);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(READ_MEDICI);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Medic medic = new Medic(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6),resultSet.getInt(7),dateToCalendar(resultSet.getDate(8)));
+                Medici.put(resultSet.getString(1),medic);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(READ_PROGRAMARI);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Programare programari = new Programare(dateToCalendar(resultSet.getDate(2)), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
+                Programari.add(programari);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(READ_ECHIPAMENTE);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Echipament echipament = new Echipament(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5),resultSet.getFloat(6));
+                Echipamente.add(echipament);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -68,7 +68,7 @@ public class Servicii {
     public static void citireCSVDataBase(HashMap<String, Client> Clienti, HashMap<String, Medic> Medici, ArrayList<Programare> Programari, ArrayList<Reteta> Retete, ArrayList<Echipament> Echipamente) {
 
         /*try {
-            File fisierClient = new File("DataBase/clientDataBase.csv");
+            File fisierClient = new File("csv.files/clientDataBase.csv");
             Scanner myReader = new Scanner(fisierClient);
             if (myReader.hasNextLine())
                 myReader.nextLine();
@@ -96,7 +96,7 @@ public class Servicii {
         }
 
         try {
-            File fisierMedic = new File("DataBase/medicDataBase.csv");
+            File fisierMedic = new File("csv.files/medicDataBase.csv");
             Scanner myReader = new Scanner(fisierMedic);
             if (myReader.hasNextLine())
                 myReader.nextLine();
@@ -123,7 +123,7 @@ public class Servicii {
         }
 
         try {
-            File fisierProgramare = new File("DataBase/programareDataBase.csv");
+            File fisierProgramare = new File("csv.files/programareDataBase.csv");
             Scanner myReader = new Scanner(fisierProgramare);
             if (myReader.hasNextLine())
                 myReader.nextLine();
@@ -147,7 +147,7 @@ public class Servicii {
         }
 
         try {
-            File fisierEchipament = new File("DataBase/echipamentDataBase.csv");
+            File fisierEchipament = new File("csv.files/echipamentDataBase.csv");
             Scanner myReader = new Scanner(fisierEchipament);
             if (myReader.hasNextLine())
                 myReader.nextLine();
@@ -171,7 +171,7 @@ public class Servicii {
         }*/
 
         try {
-            File fisierReteta = new File("DataBase/retetaDataBase.csv");
+            File fisierReteta = new File("csv.files/retetaDataBase.csv");
             Scanner myReader = new Scanner(fisierReteta);
             if (myReader.hasNextLine())
                 myReader.nextLine();
@@ -203,7 +203,7 @@ public class Servicii {
     //Scrierea in fisier
     public static void scriereDataBase(HashMap<String, Client> Clienti, HashMap<String, Medic> Medici, ArrayList<Programare> Programari, ArrayList<Reteta> Retete, ArrayList<Echipament> Echipamente) throws IOException {
 
-        FileWriter scriereClient = new FileWriter("DataBase/clientDataBase.csv");
+        FileWriter scriereClient = new FileWriter("csv.files/clientDataBase.csv");
         scriereClient.write("cnp,nume,prenume,adresa,telefon,asigurat,rezultatTestCOVID,salariat,boli,alergeni,grupaSange\n");
         for (Map.Entry x : Clienti.entrySet()) {
             scriereClient.write(((Client) x.getValue()).getCnp()
@@ -221,7 +221,7 @@ public class Servicii {
         scriereClient.close();
 
 
-        FileWriter scriereMedic = new FileWriter("DataBase/medicDataBase.csv");
+        FileWriter scriereMedic = new FileWriter("csv.files/medicDataBase.csv");
         scriereMedic.write("cnp,nume,prenume,adresa,telefon,specializare,aniExperienta,zi,luna,an\n");
         for (Map.Entry x : Medici.entrySet()) {
             scriereMedic.write(((Medic) x.getValue()).getCnp()
@@ -237,7 +237,7 @@ public class Servicii {
         }
         scriereMedic.close();
 
-        FileWriter scriereEchipament = new FileWriter("DataBase/echipamentDataBase.csv");
+        FileWriter scriereEchipament = new FileWriter("csv.files/echipamentDataBase.csv");
         scriereEchipament.write("numeProducator,telefon,numeEchipament,anProductie,pret\n");
         for (Echipament x : Echipamente) {
             scriereEchipament.write(x.getProducator().getNumeProducator()
@@ -248,7 +248,7 @@ public class Servicii {
         }
         scriereEchipament.close();
 
-        FileWriter scriereProgramare = new FileWriter("DataBase/programareDataBase.csv");
+        FileWriter scriereProgramare = new FileWriter("csv.files/programareDataBase.csv");
         scriereProgramare.write("zi,luna,an,ora,minut,detaliiProgramare,recomandari,cnpClient,cnpMedic\n");
         for (Programare x : Programari)
             scriereProgramare.write(x.getData().get(Calendar.DATE) + ","
@@ -262,7 +262,7 @@ public class Servicii {
                     + "," + x.getCnpMedic() + "\n");
         scriereProgramare.close();
 
-        FileWriter scriereReteta = new FileWriter("DataBase/retetaDataBase.csv");
+        FileWriter scriereReteta = new FileWriter("csv.files/retetaDataBase.csv");
         scriereReteta.write("durata,listaMedicamente(denumire;modAdministrare;prospect)\n");
         for (Reteta x : Retete) {
             String str = "";
@@ -281,7 +281,7 @@ public class Servicii {
     // metoda de adaugare in audit.csv
     public static void adaugareAudit(String numeActiune,String timestamp) throws IOException {
 
-        FileWriter scriereAudit = new FileWriter("DataBase/audit.csv", true);
+        FileWriter scriereAudit = new FileWriter("csv.files/audit.csv", true);
         scriereAudit.write(numeActiune+"," + timestamp + "\n");
         scriereAudit.close();
     }

@@ -48,3 +48,8 @@ Cu un meniu interactiv, clasa servicii in care avem metodele:
 2. La pornirea programului se vor încărca datele din fișiere utilizând serviciile create
 3. Realizarea unui serviciu de audit care scrie într-un fișier CSV de fiecare data când este executata una dintre acțiunile descrise in prima etapa.
 4. Am realiza servicii singleton generice pentru scrierea și citirea din fișiere.(WIP)
+
+## Etapa 3
+
+1. Am inlocui serviciile realizate în etapa a II-a cu servicii care sa asigure persistenta utilizând baza de date folosind JDBC avand 5 tabele(Persoana,Medic,Client,Echipament,Programare).
+2. Am realizat servicii care sa expună operații de tip create, read, update si delete pentru cel 4 clasele (Medic,Client,Echipament,Programare).

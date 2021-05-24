@@ -1,7 +1,6 @@
 package servicii;
 
 import echipament.Echipament;
-import echipament.Producator;
 import medicament.Medicament;
 import medicament.Reteta;
 import persoana.Client;
@@ -12,11 +11,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 import static servicii.Queries.*;
 
@@ -39,6 +36,20 @@ public class Servicii {
 
     //Citirea din fisiere
 
+    //Convert Timestamp to Calendar
+    private static Calendar timestampToCalendar(Timestamp date) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
+
+    }
+
+    //Convert Calendar to Timestamp
+    private static long calendarToTimestamp(Calendar calendar) {
+        return  calendar.getTimeInMillis();
+    }
+
     //Convert Date to Calendar
     private static Calendar dateToCalendar(Date date) {
 
@@ -53,9 +64,10 @@ public class Servicii {
         return calendar.getTimeInMillis();
     }
 
-    public static void citireDataBase(HashMap<String, Client> Clienti, HashMap<String, Medic> Medici, ArrayList<Programare> Programari, ArrayList<Reteta> Retete, ArrayList<Echipament> Echipamente) {
 
-        try {
+    public static void citireCSVDataBase(HashMap<String, Client> Clienti, HashMap<String, Medic> Medici, ArrayList<Programare> Programari, ArrayList<Reteta> Retete, ArrayList<Echipament> Echipamente) {
+
+        /*try {
             File fisierClient = new File("DataBase/clientDataBase.csv");
             Scanner myReader = new Scanner(fisierClient);
             if (myReader.hasNextLine())
@@ -80,30 +92,6 @@ public class Servicii {
             myReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("Fisierul clientDataBase.csv nu a fost gasit!!!");
-            e.printStackTrace();
-        }
-
-        try {
-            File fisierEchipament = new File("DataBase/echipamentDataBase.csv");
-            Scanner myReader = new Scanner(fisierEchipament);
-            if (myReader.hasNextLine())
-                myReader.nextLine();
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                String[] arg_of_Data = data.split(",");
-                Echipament echipament = new Echipament();
-                Producator producator = new Producator();
-                producator.setNumeProducator(arg_of_Data[0]);
-                producator.setTelefon(arg_of_Data[1]);
-                echipament.setProducator(producator);
-                echipament.setNumeEchipament(arg_of_Data[2]);
-                echipament.setAnProductie(Integer.parseInt(arg_of_Data[3]));
-                echipament.setPret(Float.parseFloat(arg_of_Data[4]));
-                Echipamente.add(echipament);
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Fisierul echipamentDataBase.csv nu a fost gasit!!!");
             e.printStackTrace();
         }
 
@@ -157,6 +145,30 @@ public class Servicii {
             System.out.println("Fisierul programareDataBase.csv nu a fost gasit!!!");
             e.printStackTrace();
         }
+
+        try {
+            File fisierEchipament = new File("DataBase/echipamentDataBase.csv");
+            Scanner myReader = new Scanner(fisierEchipament);
+            if (myReader.hasNextLine())
+                myReader.nextLine();
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] arg_of_Data = data.split(",");
+                Echipament echipament = new Echipament();
+                Producator producator = new Producator();
+                producator.setNumeProducator(arg_of_Data[0]);
+                producator.setTelefon(arg_of_Data[1]);
+                echipament.setProducator(producator);
+                echipament.setNumeEchipament(arg_of_Data[2]);
+                echipament.setAnProductie(Integer.parseInt(arg_of_Data[3]));
+                echipament.setPret(Float.parseFloat(arg_of_Data[4]));
+                Echipamente.add(echipament);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Fisierul echipamentDataBase.csv nu a fost gasit!!!");
+            e.printStackTrace();
+        }*/
 
         try {
             File fisierReteta = new File("DataBase/retetaDataBase.csv");
@@ -220,7 +232,7 @@ public class Servicii {
                     + "," + ((Medic) x.getValue()).getSpecializare()
                     + "," + ((Medic) x.getValue()).getAniExperienta()
                     + "," + ((Medic) x.getValue()).getDataAngajarii().get(Calendar.DATE)
-                    + "," + ((Medic) x.getValue()).getDataAngajarii().get(Calendar.MONTH)
+                    + "," + (((Medic) x.getValue()).getDataAngajarii().get(Calendar.MONTH)+1)
                     + "," + ((Medic) x.getValue()).getDataAngajarii().get(Calendar.YEAR) + "\n");
         }
         scriereMedic.close();
@@ -240,9 +252,9 @@ public class Servicii {
         scriereProgramare.write("zi,luna,an,ora,minut,detaliiProgramare,recomandari,cnpClient,cnpMedic\n");
         for (Programare x : Programari)
             scriereProgramare.write(x.getData().get(Calendar.DATE) + ","
-                    + x.getData().get(Calendar.MONTH)
+                    + (x.getData().get(Calendar.MONTH)+1)
                     + "," + x.getData().get(Calendar.YEAR)
-                    + "," + x.getData().get(Calendar.HOUR)
+                    + "," + x.getData().get(Calendar.HOUR_OF_DAY)
                     + "," + x.getData().get(Calendar.MINUTE)
                     + "," + x.getDetaliiProgramare()
                     + "," + x.getRecomandari()
@@ -407,7 +419,7 @@ public class Servicii {
                 nrCovid++;
         }
 
-        System.out.println("Procentajul de clienti ce au COVID:" + (float) nrCovid / nrTotal * 100);
+        System.out.println("Procentajul de clienti ce au COVID: " + (float) nrCovid / nrTotal * 100 + "%");
     }
 
     //6) Afisare Media anilor de experienta a Medicilor
@@ -480,7 +492,7 @@ public class Servicii {
     //9) Afisarea programarilor in cadrul cabinetului medical.
     public static void afisareProgramare(Programare x) {
 
-        System.out.println("Data Programarii este: Ziua" + x.getData().get(Calendar.DATE) + " Luna " + x.getData().get(Calendar.MONTH) + " Anul " + x.getData().get(Calendar.YEAR) + " Ora " + x.getData().get(Calendar.HOUR) + " Minutul " + x.getData().get(Calendar.MINUTE));
+        System.out.println("Data Programarii este (Ziua/Luna/An Ora:Minutul): " + x.getData().get(Calendar.DATE) + "/" + (x.getData().get(Calendar.MONTH)+1) + "/" + x.getData().get(Calendar.YEAR) + " " + x.getData().get(Calendar.HOUR_OF_DAY) + ":" + x.getData().get(Calendar.MINUTE));
         System.out.println("Detalii Programare: " + x.getDetaliiProgramare());
         System.out.println("Recomandari: " + x.getRecomandari());
         System.out.println("CNP Client: " + x.getCnpClient());
@@ -501,7 +513,7 @@ public class Servicii {
     }
 
     // COMENZI APLICATE PE MY_SQL DATA_BASE
-    public static void citireDB(HashMap<String, Client> Clienti, HashMap<String, Medic> Medici, ArrayList<Programare> Programari, ArrayList<Echipament> Echipamente){
+    public static void citireMYSQLDB(HashMap<String, Client> Clienti, HashMap<String, Medic> Medici, ArrayList<Programare> Programari, ArrayList<Echipament> Echipamente){
 
         try{
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(READ_CLIENTI);
@@ -529,7 +541,7 @@ public class Servicii {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(READ_PROGRAMARI);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Programare programari = new Programare(dateToCalendar(resultSet.getDate(2)), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
+                Programare programari = new Programare(timestampToCalendar(resultSet.getTimestamp(2)), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
                 Programari.add(programari);
             }
         }catch (SQLException e) {
@@ -621,13 +633,13 @@ public class Servicii {
 
     }
 
-    //INSERT INTO TABEL PROGRAMARE
+    //INSERT ON  TABEL PROGRAMARE
     public static void insertProgramare(Programare programare)
     {
         ResultSet resultSet;
         try{
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(INSERT_NEW_PROGRAMARE, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setDate(1, new java.sql.Date(calendarToDate(programare.getData())));
+            preparedStatement.setTimestamp(1, new java.sql.Timestamp(calendarToTimestamp(programare.getData())));
             preparedStatement.setString(2, programare.getDetaliiProgramare());
             preparedStatement.setString(3, programare.getRecomandari());
             preparedStatement.setString(4, programare.getCnpClient());
@@ -641,7 +653,7 @@ public class Servicii {
         }
     }
 
-    //INSERT INTO TABEL ECHIPAMENT
+    //INSERT ON  TABEL ECHIPAMENT
     public static void insertEchipament(Echipament echipament)
     {
         ResultSet resultSet;
@@ -661,7 +673,7 @@ public class Servicii {
         }
     }
 
-    //UPDATE TABEL CLIENT
+    //UPDATE ON TABEL CLIENT
     public static void  updateClient(String cnp, Client client){
 
         ResultSet resultSet;
@@ -678,7 +690,7 @@ public class Servicii {
             resultSet.next();
         }catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Some problem ocurred during update client");
+            throw new RuntimeException("S-a detectat o problema la actualizarea unei persoane");
         }
 
         try{
@@ -696,12 +708,12 @@ public class Servicii {
             resultSet.next();
         }catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Some problem ocurred during update client");
+            throw new RuntimeException("S-a detectat o problema la actualizarea unui client");
         }
     }
 
-    //UPDATE TABEL MEDIC
-    public static void  updateMedic(String cnp, Medic medic){
+    //UPDATE ON TABEL MEDIC
+    public static void updateMedic(String cnp, Medic medic){
 
         ResultSet resultSet;
         try{
@@ -717,7 +729,7 @@ public class Servicii {
             resultSet.next();
         }catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Some problem ocurred during update medic");
+            throw new RuntimeException("S-a detectat o problema la actualizarea unei persoane");
         }
 
         try{
@@ -732,7 +744,39 @@ public class Servicii {
             resultSet.next();
         }catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Some problem ocurred during update medic");
+            throw new RuntimeException("S-a detectat o problema la actualizarea unui medic");
+        }
+    }
+
+    //DELETE ON TABEL PERSOANA
+    public static void deletePersoana(String cnp){
+        ResultSet resultSet;
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(DELETE_PERSOANA,Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, cnp);
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("S-a detectat o problema la stergerea unei persoane");
+        }
+    }
+
+    //DELETE ON TABEL PROGRAMARE
+    public static void deleteProgramare(String cnp_c,String cnp_m){
+
+        ResultSet resultSet;
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(DELETE_PROGRAMARE,Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, cnp_c);
+            preparedStatement.setString(1, cnp_m);
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("S-a detectat o problema la stergerea unei programari");
         }
     }
 

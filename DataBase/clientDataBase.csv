@@ -1,12 +1,7 @@
 cnp,nume,prenume,adresa,telefon,asigurat,rezultatTestCOVID,salariat,boli,alergeni,grupaSange
-5021312,Alex,Andrei,Str. Grui nr 1,333,true,true,false,-,lapte,0+
-5011,Bucurie,Bodgan,Str. Ploiesti nr 15,0747396838,true,false,false,nu,nu,AB
-5002,Alex5002,preda,-,-,false,true,true,-,-,0+
-501,Andrei,Duta,Strada Grui nr 15,0728457298,true,true,false,-,sare,AB+
-211213,test3,test,-,0,false,true,true,-,-,AB+
-123001,Mert,Diyar,Str. bucuresti nr 13,0783784768,false,false,false,-,-,AB-
-10002,Test,alpha,-,777,false,false,false,-,lactate,AB-
-582831,Test2,achime,-,0,true,false,true,-,-,AB+
-1230210,Besel,Adrian,Strada Gruiului nr 102,0738788776,true,false,false,-,-,A+
-51,Achime,Valentin,Str. Grui Nr 152,0749554569,false,true,true,di toate,nu prea,AB+
-5051,Alex5051,-,-,-,false,true,true,nu,-,ab-
+111,Duta,Andrei,Str Grui nr 15,0725363874,true,false,true,-,-,AB
+222,Besel,Adrian,Str Independentei nr 1001,0748469573,true,false,false,-,-,A+
+333,Nicoi,Alexandru,Str Ploiesti nr 14,0674826222,false,true,true,-,-,B-
+444,Popescu,Andrei George,Str Pietroasa nr 121,0748693748,true,false,false,-,-,0+
+555,Trufas,Raul,Str G-ral Grigore Grecescu nr 17,0748564654,false,false,false,-,-,A-
+1001,test modificat,test,-,2,false,true,false,da,nu,-

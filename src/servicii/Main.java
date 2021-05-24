@@ -40,10 +40,10 @@ public class Main {
         ArrayList<Programare> Programari = new ArrayList<>();
         ArrayList<Reteta> Retete = new ArrayList<>();
         ArrayList<Echipament> Echipamente = new ArrayList<>();
-        Servicii.citireDataBase(Clienti, Medici, Programari, Retete, Echipamente);
-        Servicii.citireDB(Clienti,Medici,Programari,Echipamente);
+        Servicii.citireCSVDataBase(Clienti, Medici, Programari, Retete, Echipamente);
+        Servicii.citireMYSQLDB(Clienti,Medici,Programari,Echipamente);
 
-        //Testare INSERT
+        //Testare JDBC SERVICIES
         Medic medic = new Medic();
 
 
@@ -83,29 +83,35 @@ public class Main {
                     System.out.println("CNP: ");
                     String cnp = scan.next();
 
-                    Client a = Servicii.modificareClient();
-                    Clienti.remove(cnp);
-                    Clienti.put(a.getCnp(), a);
-                    Servicii.updateClient(cnp,a);
+                    if(Clienti.containsKey(cnp)){
+                        Client a = Servicii.modificareClient();
+                        Clienti.remove(cnp);
+                        Clienti.put(a.getCnp(), a);
+                        Servicii.updateClient(cnp,a);
 
-                    data = new Date();
-                    timestamp = formater.format(data);
-                    Servicii.adaugareAudit("Modificare client",timestamp);
+                        data = new Date();
+                        timestamp = formater.format(data);
+                        Servicii.adaugareAudit("Modificare client",timestamp);
+                    }
+                    else System.out.println("Nu exista un client cu acest CNP!!!");
+
                     break;
                 case 4:
                     System.out.println("Stergere Client(Introduceti datele clientului)");
-                    System.out.println("Nume: ");
-                    String Nume_stergere = scan.next();
-                    System.out.println("Prenume: ");
-                    String Prenume_stergere = scan.next();
-                    for (Map.Entry x : Clienti.entrySet())
-                        if (Nume_stergere.equals(((Client) x.getValue()).getNume()) && Prenume_stergere.equals(((Client) x.getValue()).getPrenume())) {
-                            Clienti.remove(x.getKey());
-                            break;
-                        }
-                    data = new Date();
-                    timestamp = formater.format(data);
-                    Servicii.adaugareAudit("Stergere client",timestamp);
+                    System.out.println("CNP: ");
+                    String cnp_stergere = scan.next();
+
+                    if(Clienti.containsKey(cnp_stergere)){
+                        Clienti.remove(cnp_stergere);
+                        Servicii.deletePersoana(cnp_stergere);
+
+                        data = new Date();
+                        timestamp = formater.format(data);
+                        Servicii.adaugareAudit("Stergere client",timestamp);
+                    }
+                    else System.out.println("Nu exista un client cu acest CNP!!!");
+
+
                     break;
                 case 5:
                     System.out.println("Statistica COVID!");
@@ -138,6 +144,7 @@ public class Main {
                     System.out.println("CNP Medic: ");
                     String cnp_medic = scan.next();
                     Programare aux = Servicii.adaugareProgramare(cnp_client, cnp_medic);
+                    Servicii.insertProgramare(aux);
                     Programari.add(aux);
                     data = new Date();
                     timestamp = formater.format(data);

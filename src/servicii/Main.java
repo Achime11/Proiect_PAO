@@ -42,7 +42,9 @@ public class Main {
         ArrayList<Echipament> Echipamente = new ArrayList<>();
         Servicii.citireCSVDataBase(Clienti, Medici, Programari, Retete, Echipamente);
         Servicii.citireMYSQLDB(Clienti,Medici,Programari,Echipamente);
-
+        //Sorting
+        Programari.sort(Programare::compareTo);
+        Echipamente.sort(Echipament::compareTo);
         //Testare JDBC SERVICIES
         Medic medic = new Medic();
 

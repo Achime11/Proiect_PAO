@@ -1,12 +1,12 @@
 numeProducator,telefon,numeEchipament,anProductie,pret
-Dacia,8939,Duster Interventii,2019,12500.5
-MedShop,747348274,Pulsometru,2021,500.0
-Riester,778741426,Stetoscop,2021,250.0
-MedShop,747348274,Otoscop,2021,350.0
-HelpNet,747348274,Laringoscop,2021,1500.0
-iHealth,785962890,Tensiometru,2021,300.0
-MedShop,747348274,Oxymetru,2021,750.0
-iHealth,744324827,Oftalmoscop,2021,670.0
 MedShop,747348274,Lampa examinare,2020,160.0
-HelpNet,747348274,Kit Prim-Ajutor,2021,1670.0
+Riester,778741426,Stetoscop,2021,250.0
+iHealth,785962890,Tensiometru,2021,300.0
+MedShop,747348274,Otoscop,2021,350.0
+MedShop,747348274,Pulsometru,2021,500.0
 iHealth,744324827,Cantar,2019,551.0
+iHealth,744324827,Oftalmoscop,2021,670.0
+MedShop,747348274,Oxymetru,2021,750.0
+HelpNet,747348274,Laringoscop,2021,1500.0
+HelpNet,747348274,Kit Prim-Ajutor,2021,1670.0
+Dacia,8939,Duster Interventii,2019,12500.5

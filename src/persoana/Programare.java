@@ -64,4 +64,9 @@ public class Programare {
     public String toString() {
         return cnpClient + " " + cnpMedic + " " + data + " " + detaliiProgramare + " " + recomandari;
     }
+
+    public int compareTo(Programare o)
+    {
+        return this.getData().compareTo(o.getData());
+    }
 }

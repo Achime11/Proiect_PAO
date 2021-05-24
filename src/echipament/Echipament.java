@@ -1,5 +1,7 @@
 package echipament;
 
+import persoana.Programare;
+
 public class Echipament {
     private Producator producator;
     private String numeEchipament;
@@ -54,5 +56,10 @@ public class Echipament {
     @Override
     public String toString() {
         return super.toString() + " " + numeEchipament + " " + anProductie + " " + pret;
+    }
+
+    public int compareTo(Echipament o)
+    {
+        return Float.compare(getPret(),o.getPret());
     }
 }

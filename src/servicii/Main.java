@@ -42,6 +42,11 @@ public class Main {
         ArrayList<Echipament> Echipamente = new ArrayList<>();
         Servicii.citireDataBase(Clienti, Medici, Programari, Retete, Echipamente);
         Servicii.citireDB(Clienti,Medici,Programari,Echipamente);
+
+        //Testare INSERT
+        Medic medic = new Medic();
+
+
         //main
         Scanner scan = new Scanner(System.in);
         int opt;
@@ -60,6 +65,7 @@ public class Main {
                     data = new Date();
                     timestamp = formater.format(data);
                     Servicii.adaugareAudit("Adaugare client",timestamp);
+                    Servicii.insertClient(client);
                     Clienti.put(client.getCnp(), client);
                     System.out.println("Client adaugat!");
                     break;
@@ -74,15 +80,14 @@ public class Main {
                 case 3:
                     System.out.println("Modificare Client(Introduceti datele clientului)");
 
-                    System.out.println("Nume: ");
-                    String Nume = scan.next();
-                    System.out.println("Prenume: ");
-                    String Prenume = scan.next();
-                    for (Map.Entry x : Clienti.entrySet())
-                        if (Nume.equals(((Client) x.getValue()).getNume()) && Prenume.equals(((Client) x.getValue()).getPrenume())) {
-                            Client a = Servicii.modificareClient();
-                            Clienti.replace((String) x.getKey(), a);
-                        }
+                    System.out.println("CNP: ");
+                    String cnp = scan.next();
+
+                    Client a = Servicii.modificareClient();
+                    Clienti.remove(cnp);
+                    Clienti.put(a.getCnp(), a);
+                    Servicii.updateClient(cnp,a);
+
                     data = new Date();
                     timestamp = formater.format(data);
                     Servicii.adaugareAudit("Modificare client",timestamp);

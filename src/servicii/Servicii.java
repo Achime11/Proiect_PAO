@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 import static servicii.Queries.*;
@@ -48,8 +49,8 @@ public class Servicii {
     }
 
     //Convert Calendar to Date
-    private static Date calendarToDate(Calendar calendar) {
-        return calendar.getTime();
+    private static long calendarToDate(Calendar calendar) {
+        return calendar.getTimeInMillis();
     }
 
     public static void citireDataBase(HashMap<String, Client> Clienti, HashMap<String, Medic> Medici, ArrayList<Programare> Programari, ArrayList<Reteta> Retete, ArrayList<Echipament> Echipamente) {
@@ -544,6 +545,194 @@ public class Servicii {
             }
         }catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    //INSERT ON TABEL CLIENT
+    public static  void insertClient(Client client){
+
+        ResultSet resultSet;
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(INSERT_NEW_PERSOANA, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, client.getCnp());
+            preparedStatement.setString(2, client.getNume());
+            preparedStatement.setString(3, client.getPrenume());
+            preparedStatement.setString(4, client.getAdresa());
+            preparedStatement.setString(5, client.getTelefon());
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("S-a detectat o problema la adaugarea unui client");
+        }
+
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(INSERT_NEW_CLIENT, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, client.getCnp());
+            preparedStatement.setBoolean(2, client.isAsigurat());
+            preparedStatement.setBoolean(3, client.isRezultatTestCOVID());
+            preparedStatement.setBoolean(4, client.isSalariat());
+            preparedStatement.setString(5, client.getBoli());
+            preparedStatement.setString(6, client.getAlergeni());
+            preparedStatement.setString(7, client.getGrupaSange());
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("S-a detectat o problema la adaugarea unui client");
+        }
+
+    }
+
+    //INSERT ON TABEL MEDIC
+    public static  void insertMedic(Medic medic){
+
+        ResultSet resultSet;
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(INSERT_NEW_PERSOANA, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, medic.getCnp());
+            preparedStatement.setString(2, medic.getNume());
+            preparedStatement.setString(3, medic.getPrenume());
+            preparedStatement.setString(4, medic.getAdresa());
+            preparedStatement.setString(5, medic.getTelefon());
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("S-a detectat o problema la adaugarea unui medic");
+        }
+
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(INSERT_NEW_MEDIC, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, medic.getCnp());
+            preparedStatement.setString(2, medic.getSpecializare());
+            preparedStatement.setInt(3, medic.getAniExperienta());
+            preparedStatement.setDate(4, new java.sql.Date(calendarToDate(medic.getDataAngajarii())));
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("S-a detectat o problema la adaugarea unui medic");
+        }
+
+    }
+
+    //INSERT INTO TABEL PROGRAMARE
+    public static void insertProgramare(Programare programare)
+    {
+        ResultSet resultSet;
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(INSERT_NEW_PROGRAMARE, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setDate(1, new java.sql.Date(calendarToDate(programare.getData())));
+            preparedStatement.setString(2, programare.getDetaliiProgramare());
+            preparedStatement.setString(3, programare.getRecomandari());
+            preparedStatement.setString(4, programare.getCnpClient());
+            preparedStatement.setString(5, programare.getCnpMedic());
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("S-a detectat o problema la adaugarea programarii");
+        }
+    }
+
+    //INSERT INTO TABEL ECHIPAMENT
+    public static void insertEchipament(Echipament echipament)
+    {
+        ResultSet resultSet;
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(INSERT_NEW_ECHIPAMENT, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, echipament.getProducator().getNumeProducator());
+            preparedStatement.setString(2, echipament.getProducator().getTelefon());
+            preparedStatement.setString(3, echipament.getNumeEchipament());
+            preparedStatement.setInt(4, echipament.getAnProductie());
+            preparedStatement.setFloat(5, echipament.getPret());
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("S-a detectat o problema la adaugarea echipamentului");
+        }
+    }
+
+    //UPDATE TABEL CLIENT
+    public static void  updateClient(String cnp, Client client){
+
+        ResultSet resultSet;
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(UPDATE_PERSOANA, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, client.getCnp());
+            preparedStatement.setString(2, client.getNume());
+            preparedStatement.setString(3, client.getPrenume());
+            preparedStatement.setString(4, client.getAdresa());
+            preparedStatement.setString(5, client.getTelefon());
+            preparedStatement.setString(6, cnp);
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Some problem ocurred during update client");
+        }
+
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(UPDATE_CLIENT, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, client.getCnp());
+            preparedStatement.setBoolean(2, client.isAsigurat());
+            preparedStatement.setBoolean(3, client.isRezultatTestCOVID());
+            preparedStatement.setBoolean(4, client.isSalariat());
+            preparedStatement.setString(5, client.getBoli());
+            preparedStatement.setString(6, client.getAlergeni());
+            preparedStatement.setString(7, client.getGrupaSange());
+            preparedStatement.setString(8, client.getCnp());
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Some problem ocurred during update client");
+        }
+    }
+
+    //UPDATE TABEL MEDIC
+    public static void  updateMedic(String cnp, Medic medic){
+
+        ResultSet resultSet;
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(UPDATE_PERSOANA, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, medic.getCnp());
+            preparedStatement.setString(2, medic.getNume());
+            preparedStatement.setString(3, medic.getPrenume());
+            preparedStatement.setString(4, medic.getAdresa());
+            preparedStatement.setString(5, medic.getTelefon());
+            preparedStatement.setString(6, cnp);
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Some problem ocurred during update medic");
+        }
+
+        try{
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(UPDATE_MEDIC, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, medic.getCnp());
+            preparedStatement.setString(2, medic.getSpecializare());
+            preparedStatement.setInt(3, medic.getAniExperienta());
+            preparedStatement.setDate(4, new java.sql.Date(calendarToDate(medic.getDataAngajarii())));
+            preparedStatement.setString(5,medic.getCnp());
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            resultSet.next();
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Some problem ocurred during update medic");
         }
     }
 

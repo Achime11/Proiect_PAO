@@ -2,7 +2,7 @@ package persoana;
 
 import java.util.Calendar;
 
-public class Programare {
+public class Programare implements Comparable<Programare>{
     private Calendar data;
     private String detaliiProgramare;
     private String recomandari;
@@ -65,6 +65,7 @@ public class Programare {
         return cnpClient + " " + cnpMedic + " " + data + " " + detaliiProgramare + " " + recomandari;
     }
 
+    @Override
     public int compareTo(Programare o)
     {
         return this.getData().compareTo(o.getData());

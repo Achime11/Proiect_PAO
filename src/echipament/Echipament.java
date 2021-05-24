@@ -2,7 +2,7 @@ package echipament;
 
 import persoana.Programare;
 
-public class Echipament {
+public class Echipament implements Comparable<Echipament>{
     private Producator producator;
     private String numeEchipament;
     private int anProductie;
@@ -58,6 +58,7 @@ public class Echipament {
         return super.toString() + " " + numeEchipament + " " + anProductie + " " + pret;
     }
 
+    @Override
     public int compareTo(Echipament o)
     {
         return Float.compare(getPret(),o.getPret());

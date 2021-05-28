@@ -1,8 +1,6 @@
 package echipament;
 
-import persoana.Programare;
-
-public class Echipament implements Comparable<Echipament>{
+public class Echipament implements Comparable<Echipament> {
     private Producator producator;
     private String numeEchipament;
     private int anProductie;
@@ -13,7 +11,7 @@ public class Echipament implements Comparable<Echipament>{
 
     public Echipament(String numeProducator, String telefon, String numeEchipament, int anProductie, float pret) {
         Producator prod = new Producator();
-        this.producator=prod;
+        this.producator = prod;
         this.producator.setNumeProducator(numeProducator);
         this.producator.setTelefon(telefon);
         this.numeEchipament = numeEchipament;
@@ -59,8 +57,7 @@ public class Echipament implements Comparable<Echipament>{
     }
 
     @Override
-    public int compareTo(Echipament o)
-    {
-        return Float.compare(getPret(),o.getPret());
+    public int compareTo(Echipament o) {
+        return Float.compare(getPret(), o.getPret());
     }
 }

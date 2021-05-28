@@ -41,7 +41,7 @@ public class Main {
         ArrayList<Reteta> Retete = new ArrayList<>();
         ArrayList<Echipament> Echipamente = new ArrayList<>();
         Servicii.citireCSVDataBase(Clienti, Medici, Programari, Retete, Echipamente);
-        Servicii.citireMYSQLDB(Clienti,Medici,Programari,Echipamente);
+        Servicii.citireMYSQLDB(Clienti, Medici, Programari, Echipamente);
         //Sorting
         Programari.sort(Programare::compareTo);
         Echipamente.sort(Echipament::compareTo);
@@ -137,32 +137,32 @@ public class Main {
                     System.out.println("Adaugare programare");
                     System.out.println("CNP Client: ");
                     String cnp_client = scan.next();
-                    while (!Clienti.containsKey(cnp_client)){
+                    while (!Clienti.containsKey(cnp_client)) {
                         System.out.println("Nu exista niciun client cu acest CNP!");
                         System.out.println("Introduceti CNP 0 daca doriti sa opriti actiunea de adaugare a unei programari!");
                         System.out.println("CNP Client: ");
                         cnp_client = scan.next();
-                        if(cnp_client.equals("0")){
+                        if (cnp_client.equals("0")) {
                             stop_actions = true;
                             break;
                         }
                     }
-                    if(stop_actions)
+                    if (stop_actions)
                         break;
                     System.out.println("CNP Medic: ");
                     String cnp_medic = scan.next();
-                    while (!Clienti.containsKey(cnp_medic)){
+                    while (!Clienti.containsKey(cnp_medic)) {
                         System.out.println("Nu exista niciun medic cu acest CNP!");
                         System.out.println("Introduceti CNP 0 daca doriti sa opriti actiunea de adaugare a unei programari!");
                         System.out.println("CNP Medic: ");
                         cnp_medic = scan.next();
-                        if(cnp_medic.equals("0")){
+                        if (cnp_medic.equals("0")) {
                             stop_actions = true;
                             break;
                         }
 
                     }
-                    if(stop_actions)
+                    if (stop_actions)
                         break;
 
                     Programare aux = Servicii.adaugareProgramare(cnp_client, cnp_medic);

@@ -12,13 +12,13 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
-import java.util.*;
 import java.util.Date;
+import java.util.*;
 
 import static servicii.Queries.*;
 
 public class Servicii {
-    private static DbConnection dbConnection = DbConnection.getInstance();
+    private static final DbConnection dbConnection = DbConnection.getInstance();
 
     /*
     ("1. Adaugare Client in cadrul cabinetului medical.");
@@ -47,7 +47,7 @@ public class Servicii {
 
     //Convert Calendar to Timestamp
     private static long calendarToTimestamp(Calendar calendar) {
-        return  calendar.getTimeInMillis();
+        return calendar.getTimeInMillis();
     }
 
     //Convert Date to Calendar
@@ -232,7 +232,7 @@ public class Servicii {
                     + "," + ((Medic) x.getValue()).getSpecializare()
                     + "," + ((Medic) x.getValue()).getAniExperienta()
                     + "," + ((Medic) x.getValue()).getDataAngajarii().get(Calendar.DATE)
-                    + "," + (((Medic) x.getValue()).getDataAngajarii().get(Calendar.MONTH)+1)
+                    + "," + (((Medic) x.getValue()).getDataAngajarii().get(Calendar.MONTH) + 1)
                     + "," + ((Medic) x.getValue()).getDataAngajarii().get(Calendar.YEAR) + "\n");
         }
         scriereMedic.close();
@@ -252,7 +252,7 @@ public class Servicii {
         scriereProgramare.write("zi,luna,an,ora,minut,detaliiProgramare,recomandari,cnpClient,cnpMedic\n");
         for (Programare x : Programari)
             scriereProgramare.write(x.getData().get(Calendar.DATE) + ","
-                    + (x.getData().get(Calendar.MONTH)+1)
+                    + (x.getData().get(Calendar.MONTH) + 1)
                     + "," + x.getData().get(Calendar.YEAR)
                     + "," + x.getData().get(Calendar.HOUR_OF_DAY)
                     + "," + x.getData().get(Calendar.MINUTE)
@@ -279,10 +279,10 @@ public class Servicii {
     }
 
     // metoda de adaugare in audit.csv
-    public static void adaugareAudit(String numeActiune,String timestamp) throws IOException {
+    public static void adaugareAudit(String numeActiune, String timestamp) throws IOException {
 
         FileWriter scriereAudit = new FileWriter("csv.files/audit.csv", true);
-        scriereAudit.write(numeActiune+"," + timestamp + "\n");
+        scriereAudit.write(numeActiune + "," + timestamp + "\n");
         scriereAudit.close();
     }
 
@@ -418,7 +418,7 @@ public class Servicii {
             if (((Client) x.getValue()).isRezultatTestCOVID())
                 nrCovid++;
         }
-        System.out.printf("Procentajul de clienti ce au COVID: %.2f",(float) nrCovid / nrTotal * 100);
+        System.out.printf("Procentajul de clienti ce au COVID: %.2f", (float) nrCovid / nrTotal * 100);
         System.out.println("%");
     }
 
@@ -492,7 +492,7 @@ public class Servicii {
     //9) Afisarea programarilor in cadrul cabinetului medical.
     public static void afisareProgramare(Programare x) {
 
-        System.out.println("Data Programarii este (Ziua/Luna/An Ora:Minutul): " + x.getData().get(Calendar.DATE) + "/" + (x.getData().get(Calendar.MONTH)+1) + "/" + x.getData().get(Calendar.YEAR) + " " + x.getData().get(Calendar.HOUR_OF_DAY) + ":" + x.getData().get(Calendar.MINUTE));
+        System.out.println("Data Programarii este (Ziua/Luna/An Ora:Minutul): " + x.getData().get(Calendar.DATE) + "/" + (x.getData().get(Calendar.MONTH) + 1) + "/" + x.getData().get(Calendar.YEAR) + " " + x.getData().get(Calendar.HOUR_OF_DAY) + ":" + x.getData().get(Calendar.MINUTE));
         System.out.println("Detalii Programare: " + x.getDetaliiProgramare());
         System.out.println("Recomandari: " + x.getRecomandari());
         System.out.println("CNP Client: " + x.getCnpClient());
@@ -513,58 +513,58 @@ public class Servicii {
     }
 
     // COMENZI APLICATE PE MY_SQL DATA_BASE
-    public static void citireMYSQLDB(HashMap<String, Client> Clienti, HashMap<String, Medic> Medici, ArrayList<Programare> Programari, ArrayList<Echipament> Echipamente){
+    public static void citireMYSQLDB(HashMap<String, Client> Clienti, HashMap<String, Medic> Medici, ArrayList<Programare> Programari, ArrayList<Echipament> Echipamente) {
 
-        try{
+        try {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(READ_CLIENTI);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Client client = new Client(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getBoolean(6),resultSet.getBoolean(7),resultSet.getBoolean(8),resultSet.getString(9),resultSet.getString(10),resultSet.getString(11) );
-                Clienti.put(resultSet.getString(1),client);
+                Client client = new Client(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getBoolean(6), resultSet.getBoolean(7), resultSet.getBoolean(8), resultSet.getString(9), resultSet.getString(10), resultSet.getString(11));
+                Clienti.put(resultSet.getString(1), client);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        try{
+        try {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(READ_MEDICI);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Medic medic = new Medic(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6),resultSet.getInt(7),dateToCalendar(resultSet.getDate(8)));
-                Medici.put(resultSet.getString(1),medic);
+                Medic medic = new Medic(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getInt(7), dateToCalendar(resultSet.getDate(8)));
+                Medici.put(resultSet.getString(1), medic);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        try{
+        try {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(READ_PROGRAMARI);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Programare programari = new Programare(timestampToCalendar(resultSet.getTimestamp(2)), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
                 Programari.add(programari);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        try{
+        try {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(READ_ECHIPAMENTE);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Echipament echipament = new Echipament(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5),resultSet.getFloat(6));
+                Echipament echipament = new Echipament(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5), resultSet.getFloat(6));
                 Echipamente.add(echipament);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     //INSERT ON TABEL CLIENT
-    public static  void insertClient(Client client){
+    public static void insertClient(Client client) {
 
         ResultSet resultSet;
-        try{
+        try {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(INSERT_NEW_PERSOANA, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, client.getCnp());
             preparedStatement.setString(2, client.getNume());
@@ -574,12 +574,12 @@ public class Servicii {
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("S-a detectat o problema la adaugarea unui client");
         }
 
-        try{
+        try {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(INSERT_NEW_CLIENT, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, client.getCnp());
             preparedStatement.setBoolean(2, client.isAsigurat());
@@ -591,7 +591,7 @@ public class Servicii {
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("S-a detectat o problema la adaugarea unui client");
         }
@@ -599,10 +599,10 @@ public class Servicii {
     }
 
     //INSERT ON TABEL MEDIC
-    public static  void insertMedic(Medic medic){
+    public static void insertMedic(Medic medic) {
 
         ResultSet resultSet;
-        try{
+        try {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(INSERT_NEW_PERSOANA, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, medic.getCnp());
             preparedStatement.setString(2, medic.getNume());
@@ -612,12 +612,12 @@ public class Servicii {
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("S-a detectat o problema la adaugarea unui medic");
         }
 
-        try{
+        try {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(INSERT_NEW_MEDIC, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, medic.getCnp());
             preparedStatement.setString(2, medic.getSpecializare());
@@ -626,7 +626,7 @@ public class Servicii {
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("S-a detectat o problema la adaugarea unui medic");
         }
@@ -634,10 +634,9 @@ public class Servicii {
     }
 
     //INSERT ON  TABEL PROGRAMARE
-    public static void insertProgramare(Programare programare)
-    {
+    public static void insertProgramare(Programare programare) {
         ResultSet resultSet;
-        try{
+        try {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(INSERT_NEW_PROGRAMARE, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setTimestamp(1, new java.sql.Timestamp(calendarToTimestamp(programare.getData())));
             preparedStatement.setString(2, programare.getDetaliiProgramare());
@@ -647,17 +646,16 @@ public class Servicii {
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("S-a detectat o problema la adaugarea programarii");
         }
     }
 
     //INSERT ON  TABEL ECHIPAMENT
-    public static void insertEchipament(Echipament echipament)
-    {
+    public static void insertEchipament(Echipament echipament) {
         ResultSet resultSet;
-        try{
+        try {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(INSERT_NEW_ECHIPAMENT, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, echipament.getProducator().getNumeProducator());
             preparedStatement.setString(2, echipament.getProducator().getTelefon());
@@ -667,17 +665,17 @@ public class Servicii {
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("S-a detectat o problema la adaugarea echipamentului");
         }
     }
 
     //UPDATE ON TABEL CLIENT
-    public static void  updateClient(String cnp, Client client){
+    public static void updateClient(String cnp, Client client) {
 
         ResultSet resultSet;
-        try{
+        try {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(UPDATE_PERSOANA, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, client.getCnp());
             preparedStatement.setString(2, client.getNume());
@@ -688,12 +686,12 @@ public class Servicii {
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("S-a detectat o problema la actualizarea unei persoane");
         }
 
-        try{
+        try {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(UPDATE_CLIENT, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, client.getCnp());
             preparedStatement.setBoolean(2, client.isAsigurat());
@@ -706,17 +704,17 @@ public class Servicii {
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("S-a detectat o problema la actualizarea unui client");
         }
     }
 
     //UPDATE ON TABEL MEDIC
-    public static void updateMedic(String cnp, Medic medic){
+    public static void updateMedic(String cnp, Medic medic) {
 
         ResultSet resultSet;
-        try{
+        try {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(UPDATE_PERSOANA, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, medic.getCnp());
             preparedStatement.setString(2, medic.getNume());
@@ -727,54 +725,54 @@ public class Servicii {
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("S-a detectat o problema la actualizarea unei persoane");
         }
 
-        try{
+        try {
             PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(UPDATE_MEDIC, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, medic.getCnp());
             preparedStatement.setString(2, medic.getSpecializare());
             preparedStatement.setInt(3, medic.getAniExperienta());
             preparedStatement.setDate(4, new java.sql.Date(calendarToDate(medic.getDataAngajarii())));
-            preparedStatement.setString(5,medic.getCnp());
+            preparedStatement.setString(5, medic.getCnp());
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("S-a detectat o problema la actualizarea unui medic");
         }
     }
 
     //DELETE ON TABEL PERSOANA
-    public static void deletePersoana(String cnp){
+    public static void deletePersoana(String cnp) {
         ResultSet resultSet;
-        try{
-            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(DELETE_PERSOANA,Statement.RETURN_GENERATED_KEYS);
+        try {
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(DELETE_PERSOANA, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, cnp);
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("S-a detectat o problema la stergerea unei persoane");
         }
     }
 
     //DELETE ON TABEL PROGRAMARE
-    public static void deleteProgramare(String cnp_c,String cnp_m){
+    public static void deleteProgramare(String cnp_c, String cnp_m) {
 
         ResultSet resultSet;
-        try{
-            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(DELETE_PROGRAMARE,Statement.RETURN_GENERATED_KEYS);
+        try {
+            PreparedStatement preparedStatement = dbConnection.getDBConnection().prepareStatement(DELETE_PROGRAMARE, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, cnp_c);
             preparedStatement.setString(1, cnp_m);
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             resultSet.next();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("S-a detectat o problema la stergerea unei programari");
         }

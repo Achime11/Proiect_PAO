@@ -10,7 +10,7 @@ public class DbConnection {
     private static final String DATABASE_PASSWORD = "root";
     private final Connection connection;
 
-    private DbConnection(){
+    private DbConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.connection = getConnection();
@@ -19,11 +19,11 @@ public class DbConnection {
         }
     }
 
-    private Connection getConnection() throws SQLException{
-        return DriverManager.getConnection(DATABASE_URL,DATABASE_USER_NAME,DATABASE_PASSWORD);
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(DATABASE_URL, DATABASE_USER_NAME, DATABASE_PASSWORD);
     }
 
-    private static final class SINGLETON_HOLDER{
+    private static final class SINGLETON_HOLDER {
         private static final DbConnection INSTANCE = new DbConnection();
     }
 

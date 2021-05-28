@@ -418,8 +418,8 @@ public class Servicii {
             if (((Client) x.getValue()).isRezultatTestCOVID())
                 nrCovid++;
         }
-
-        System.out.println("Procentajul de clienti ce au COVID: " + (float) nrCovid / nrTotal * 100 + "%");
+        System.out.printf("Procentajul de clienti ce au COVID: %.2f",(float) nrCovid / nrTotal * 100);
+        System.out.println("%");
     }
 
     //6) Afisare Media anilor de experienta a Medicilor

@@ -12,7 +12,7 @@ public class DbConnection {
 
     private DbConnection(){
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             this.connection = getConnection();
         } catch (SQLException | ClassNotFoundException exception) {
             throw new RuntimeException("Something went wrong during connection/driver invocation!!!!");
